@@ -51,13 +51,21 @@
           (click)="onFavoriteClick($event)"
           [class.text-danger]="isFavorite()" 
           [class.text-secondary]="!isFavorite()"
+          title="Add to Favorites"
         >
           <i class="bi" [ngClass]="isFavorite() ? 'bi-heart-fill' : 'bi-heart'" style="font-size: 1.3rem;"></i>
         </button>
         
-        <button class="btn btn-icon p-0 text-secondary">
-          <i class="bi bi-share fs-5"></i>
+        <button 
+          class="btn btn-icon p-0 ms-2" 
+          [class.text-secondary]="!isCopied"
+          [class.text-success]="isCopied"
+          (click)="onShare($event)"
+          title="Share Recipe"
+        >
+          <i class="bi" [ngClass]="isCopied ? 'bi-check-lg' : 'bi-share'" style="font-size: 1.3rem;"></i>
         </button>
+
       </div>
     </div>
   </div>

@@ -23,6 +23,8 @@ export class RecipeCard {
   private recipeService = inject(RecipeService);
   private router = inject(Router);
 
+  isCopied = false;
+
   isFavorite = computed(() => {
     return this.favoriteService.isFavorite(this.recipe.id);
   });
@@ -32,16 +34,10 @@ export class RecipeCard {
     return user && this.recipe.userId && String(this.recipe.userId) === String(user.id);
   }
 
-  // === 修复后的逻辑 ===
   get detailLink(): any[] {
-    // 1. 收藏夹里的数据：有 userId，但也有 recipeId (指向原始ID) -> 应该是普通链接
-    // 2. 自定义食谱：有 userId，但没有 recipeId -> 应该是 custom 链接
-    
     if (this.recipe.userId && !this.recipe.recipeId) {
       return ['/recipe', `custom-${this.recipe.id}`];
     }
-    
-    // 默认情况 (API 食谱 / 收藏的 API 食谱 / 缓存食谱)
     return ['/recipe', this.recipe.id];
   }
 
@@ -74,5 +70,49 @@ export class RecipeCard {
         error: (err) => alert('Failed to delete recipe')
       });
     }
+  }
+
+  // === 升级版分享功能 ===
+  async onShare(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    // 1. 构建完整 URL
+    const urlTree = this.router.createUrlTree(this.detailLink);
+    const fullUrl = window.location.origin + urlTree.toString();
+    const shareData = {
+      title: this.recipe.title || 'Delicious Recipe',
+      text: `Check out this recipe for ${this.recipe.title}!`,
+      url: fullUrl
+    };
+
+    // 2. 尝试调用原生分享 (Web Share API)
+    // 注意：navigator.share 只能在 HTTPS 或 localhost 环境下使用
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        console.log('Shared successfully');
+        return; // 如果分享成功，就不用复制链接了
+      } catch (err) {
+        console.log('Error sharing or user cancelled:', err);
+        // 如果用户取消了分享，或者报错了，我们不一定要降级复制，看你需求
+        // 这里我们选择：如果报错（非取消），尝试降级复制
+      }
+    }
+
+    // 3. 降级方案：复制到剪贴板
+    // (如果浏览器不支持原生分享，或者在非安全环境下)
+    this.copyToClipboard(fullUrl);
+  }
+
+  private copyToClipboard(text: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      this.isCopied = true;
+      setTimeout(() => {
+        this.isCopied = false;
+      }, 2000);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
   }
 }
