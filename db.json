@@ -195,8 +195,33 @@
       "notes": "",
       "userId": "1",
       "createdAt": "2025-11-08T13:49:33.179Z",
-      "updatedAt": "2025-11-28T01:38:10.905Z",
-      "readyInMinutes": 45
+      "updatedAt": "2025-11-28T23:02:37.615Z",
+      "readyInMinutes": 45,
+      "nutrition": {
+        "nutrients": [
+          {
+            "name": "Calories",
+            "amount": 500,
+            "unit": "kcal"
+          },
+          {
+            "name": "Protein",
+            "amount": 30,
+            "unit": "g"
+          },
+          {
+            "name": "Fat",
+            "amount": 0,
+            "unit": "g"
+          },
+          {
+            "name": "Carbohydrates",
+            "amount": 0,
+            "unit": "g"
+          }
+        ]
+      },
+      "dairyFree": true
     },
     {
       "id": "d91c",

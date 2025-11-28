@@ -18,24 +18,27 @@
 
             <div class="mb-4">
               <label class="form-label fw-bold small text-muted">DIETS</label>
-              @for (diet of availableDiets; track diet) {
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" [id]="'diet-'+diet" 
-                         (change)="onCheckboxChange($event, filters.diets, diet)">
-                  <label class="form-check-label" [for]="'diet-'+diet">{{ diet }}</label>
-                </div>
-              }
+              <div class="checkbox-group"> @for (diet of availableDiets; track diet) {
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [id]="'diet-'+diet" 
+                           (change)="onCheckboxChange($event, filters.diets, diet)">
+                    <label class="form-check-label" [for]="'diet-'+diet">{{ diet }}</label>
+                  </div>
+                }
+              </div>
             </div>
 
             <div class="mb-4">
               <label class="form-label fw-bold small text-muted">INTOLERANCES</label>
-              @for (intel of availableIntolerances; track intel) {
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" [id]="'intel-'+intel"
-                         (change)="onCheckboxChange($event, filters.intolerances, intel)">
+              <div class="checkbox-group">
+                @for (intel of availableIntolerances; track intel) {
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [id]="'intel-'+intel"
+                           (change)="onCheckboxChange($event, filters.intolerances, intel)">
                   <label class="form-check-label" [for]="'intel-'+intel">{{ intel }}</label>
                 </div>
               }
+              </div>
             </div>
 
             <div class="mb-4">

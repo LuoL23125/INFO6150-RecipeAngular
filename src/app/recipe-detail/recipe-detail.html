@@ -28,30 +28,62 @@
           </a>
         </div>
 
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          @if (recipe.vegetarian) { <span class="badge bg-success">Vegetarian</span> }
+          @if (recipe.vegan) { <span class="badge bg-success">Vegan</span> }
+          @if (recipe.glutenFree) { <span class="badge bg-warning text-dark">Gluten Free</span> }
+          @if (recipe.dairyFree) { <span class="badge bg-info text-dark">Dairy Free</span> }
+          <span class="badge bg-light text-dark border"><i class="bi bi-clock me-1"></i> {{ recipe.readyInMinutes }} min</span>
+          <span class="badge bg-light text-dark border"><i class="bi bi-people me-1"></i> {{ recipe.servings }} servings</span>
+        </div>
+
         <div class="row">
           <div class="col-md-4">
+            
+            <div class="card bg-light border-0 mb-4">
+              <div class="card-body">
+                <h5 class="card-title fw-bold text-success mb-3">Nutrition Facts</h5>
+                @if (recipe.nutrition && recipe.nutrition.nutrients) {
+                  <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                    <span>Calories</span>
+                    <span class="fw-bold">{{ getNutrient(recipe, 'Calories') }}</span>
+                  </div>
+                  <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                    <span>Protein</span>
+                    <span class="fw-bold">{{ getNutrient(recipe, 'Protein') }}</span>
+                  </div>
+                  <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                    <span>Fat</span>
+                    <span class="fw-bold">{{ getNutrient(recipe, 'Fat') }}</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span>Carbs</span>
+                    <span class="fw-bold">{{ getNutrient(recipe, 'Carbohydrates') }}</span>
+                  </div>
+                } @else {
+                  <p class="text-muted small mb-0">Nutrition data not available for this recipe.</p>
+                }
+              </div>
+            </div>
+
             <div class="p-3 bg-light rounded">
               <h4 class="mb-3 text-success fw-bold">Ingredients</h4>
               <ul class="list-group list-group-flush bg-transparent">
-                
                 @if (recipe.extendedIngredients) {
                   @for (ing of recipe.extendedIngredients; track ing.id) {
                     <li class="list-group-item bg-transparent ps-0">
                       • {{ ing.original }}
                     </li>
                   }
-                } 
-                @else if (recipe.ingredients && isList(recipe.ingredients)) {
+                } @else if (recipe.ingredients && isList(recipe.ingredients)) {
                   @for (ing of recipe.ingredients; track $index) {
                     <li class="list-group-item bg-transparent ps-0">
                       • {{ ing }}
                     </li>
                   }
-                }
-                @else {
+                } @else {
                   <li class="list-group-item bg-transparent">No ingredients listed.</li>
                 }
-
               </ul>
             </div>
           </div>
@@ -68,8 +100,7 @@
                     </li>
                   }
                 </ol>
-              } 
-              @else if (recipe.instructions && isList(recipe.instructions)) {
+              } @else if (recipe.instructions && isList(recipe.instructions)) {
                 <ol class="list-group list-group-numbered">
                   @for (step of recipe.instructions; track $index) {
                     <li class="list-group-item border-0 mb-2">
@@ -77,8 +108,7 @@
                     </li>
                   }
                 </ol>
-              }
-              @else {
+              } @else {
                 <p class="lead fs-6" [innerHTML]="recipe.instructions || recipe.summary"></p>
               }
             </div>

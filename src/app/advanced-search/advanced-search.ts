@@ -16,6 +16,8 @@ import { RecipeCard } from '../recipe-card/recipe-card';
     .form-check-input:checked { background-color: #2c7a38; border-color: #2c7a38; }
     .custom-green-btn { background-color: #2c7a38; color: white; }
     .custom-green-btn:hover { background-color: #215c2b; }
+    /* 限制复选框区域高度，防止列表太长 */
+    .checkbox-group { max-height: 200px; overflow-y: auto; }
   `]
 })
 export class AdvancedSearch {
@@ -24,14 +26,23 @@ export class AdvancedSearch {
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
 
-  // 选项配置
-  availableDiets = ['Vegetarian', 'Vegan', 'Gluten Free'];
-  availableIntolerances = ['Dairy', 'Peanut', 'Gluten'];
+  // === 完整的 Spoonacular Diet 列表 ===
+  availableDiets = [
+    'Gluten Free', 'Ketogenic', 'Vegetarian', 'Lacto-Vegetarian',
+    'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo',
+    'Primal', 'Low FODMAP', 'Whole30'
+  ];
 
-  // 表单状态
+  // === 完整的 Spoonacular Intolerance 列表 ===
+  availableIntolerances = [
+    'Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut',
+    'Seafood', 'Sesame', 'Shellfish', 'Soy',
+    'Sulfite', 'Tree Nut', 'Wheat'
+  ];
+
   filters = {
     query: '',
-    ingredients: '', // 逗号分隔字符串
+    ingredients: '', 
     diets: [] as string[],
     intolerances: [] as string[]
   };
@@ -41,13 +52,12 @@ export class AdvancedSearch {
   hasSearched = false;
 
   constructor() {
-    // 权限控制：仅登录用户可用
+    // 权限保护
     if (!this.authService.currentUser()) {
       this.router.navigate(['/login']);
     }
   }
 
-  // 处理 Checkbox 变化
   onCheckboxChange(e: any, array: string[], value: string) {
     if (e.target.checked) {
       array.push(value);
@@ -62,7 +72,7 @@ export class AdvancedSearch {
     this.hasSearched = true;
     this.recipes = [];
 
-    // 1. 尝试 API 搜索
+    // 1. 优先尝试 API
     this.recipeService.complexSearchRemote(this.filters).subscribe({
       next: (data: any) => {
         console.log('API 高级搜索结果:', data);
@@ -72,7 +82,7 @@ export class AdvancedSearch {
       },
       error: (err) => {
         console.warn('API 失败，启用本地高级搜索...', err);
-        // 2. 失败则使用本地过滤
+        // 2. 失败则使用本地智能过滤
         this.searchLocal();
       }
     });

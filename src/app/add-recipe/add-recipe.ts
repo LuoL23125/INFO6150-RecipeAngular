@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core'; // <--- 1. 引入 ChangeDetectorRef
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -22,8 +22,9 @@ export class AddRecipe implements OnInit {
   private recipeService = inject(RecipeService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private cdr = inject(ChangeDetectorRef); // <--- 2. 注入它
+  private cdr = inject(ChangeDetectorRef);
 
+  // 表单数据模型
   recipeData: any = {
     title: '',
     description: '',
@@ -33,7 +34,19 @@ export class AddRecipe implements OnInit {
     cookTime: 15,
     ingredients: [''], 
     instructions: [''], 
-    isPublic: false
+    isPublic: false,
+    
+    // Nutrition
+    calories: null,
+    protein: null,
+    fat: null,
+    carbs: null,
+
+    // === 新增：饮食标签 (Dietary Tags) ===
+    vegetarian: false,
+    vegan: false,
+    glutenFree: false,
+    dairyFree: false
   };
 
   isEditMode = false;
@@ -57,52 +70,53 @@ export class AddRecipe implements OnInit {
   loadRecipeForEdit(id: string) {
     this.recipeService.getCustomRecipeById(id).subscribe(recipe => {
       if (recipe) {
-        // 填充表单
         this.recipeData = { ...recipe };
         
-        // 数据清洗：确保数组不为空
-        if (!this.recipeData.ingredients || this.recipeData.ingredients.length === 0) {
-          this.recipeData.ingredients = [''];
-        }
-        if (!this.recipeData.instructions || this.recipeData.instructions.length === 0) {
-          this.recipeData.instructions = [''];
+        // 数组防空处理
+        if (!this.recipeData.ingredients || this.recipeData.ingredients.length === 0) this.recipeData.ingredients = [''];
+        if (!this.recipeData.instructions || this.recipeData.instructions.length === 0) this.recipeData.instructions = [''];
+
+        // 营养数据回显
+        if (recipe.nutrition && recipe.nutrition.nutrients) {
+          const nutrients = recipe.nutrition.nutrients;
+          const cal = nutrients.find((n: any) => n.name === 'Calories');
+          const pro = nutrients.find((n: any) => n.name === 'Protein');
+          const fat = nutrients.find((n: any) => n.name === 'Fat');
+          const carb = nutrients.find((n: any) => n.name === 'Carbohydrates');
+
+          this.recipeData.calories = cal ? cal.amount : null;
+          this.recipeData.protein = pro ? pro.amount : null;
+          this.recipeData.fat = fat ? fat.amount : null;
+          this.recipeData.carbs = carb ? carb.amount : null;
         }
 
-        // <--- 3. 关键修复：强制刷新视图，让数据立即回显 --->
+        // 饮食标签会自动回显，因为它们直接就在 recipe 对象的第一层
+
         this.cdr.detectChanges();
       }
     });
   }
 
-  addIngredient() {
-    this.recipeData.ingredients.push('');
-  }
-
-  removeIngredient(index: number) {
-    if (this.recipeData.ingredients.length > 1) {
-      this.recipeData.ingredients.splice(index, 1);
-    }
-  }
-
-  addInstruction() {
-    this.recipeData.instructions.push('');
-  }
-
-  removeInstruction(index: number) {
-    if (this.recipeData.instructions.length > 1) {
-      this.recipeData.instructions.splice(index, 1);
-    }
-  }
-
-  trackByIndex(index: number, obj: any): any {
-    return index;
-  }
+  addIngredient() { this.recipeData.ingredients.push(''); }
+  removeIngredient(index: number) { if (this.recipeData.ingredients.length > 1) this.recipeData.ingredients.splice(index, 1); }
+  addInstruction() { this.recipeData.instructions.push(''); }
+  removeInstruction(index: number) { if (this.recipeData.instructions.length > 1) this.recipeData.instructions.splice(index, 1); }
+  trackByIndex(index: number, obj: any): any { return index; }
 
   onSubmit() {
     const user = this.authService.currentUser();
     if (!user) return;
 
-    // 构造数据
+    // 构造营养对象
+    const nutritionObj = {
+      nutrients: [
+        { name: 'Calories', amount: this.recipeData.calories || 0, unit: 'kcal' },
+        { name: 'Protein', amount: this.recipeData.protein || 0, unit: 'g' },
+        { name: 'Fat', amount: this.recipeData.fat || 0, unit: 'g' },
+        { name: 'Carbohydrates', amount: this.recipeData.carbs || 0, unit: 'g' }
+      ]
+    };
+
     const recipeToSave = {
       ...this.recipeData,
       ingredients: this.recipeData.ingredients.filter((i: string) => i.trim() !== ''),
@@ -110,17 +124,23 @@ export class AddRecipe implements OnInit {
       totalTime: this.recipeData.prepTime + this.recipeData.cookTime,
       readyInMinutes: this.recipeData.prepTime + this.recipeData.cookTime,
       userId: user.id,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
+      nutrition: nutritionObj
+      // vegetarian, vegan 等字段已经在 this.recipeData 里了，会自动 spread 进去
     };
 
+    // 清理临时字段
+    delete recipeToSave.calories;
+    delete recipeToSave.protein;
+    delete recipeToSave.fat;
+    delete recipeToSave.carbs;
+
     if (this.isEditMode && this.recipeId) {
-      // Update
       this.recipeService.updateCustomRecipe(this.recipeId, recipeToSave).subscribe({
         next: () => this.router.navigate(['/profile'], { queryParams: { tab: 'custom' } }),
         error: (err) => console.error('Update failed', err)
       });
     } else {
-      // Create
       recipeToSave.createdAt = new Date().toISOString();
       this.recipeService.addCustomRecipe(recipeToSave).subscribe({
         next: () => this.router.navigate(['/profile'], { queryParams: { tab: 'custom' } }),

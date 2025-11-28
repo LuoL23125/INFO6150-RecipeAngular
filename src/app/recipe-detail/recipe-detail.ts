@@ -57,6 +57,14 @@ export class RecipeDetail implements OnInit {
     });
   }
 
+  // === 新增：获取特定营养成分的值 ===
+  getNutrient(recipe: any, name: string): string {
+    if (!recipe.nutrition || !recipe.nutrition.nutrients) return 'N/A';
+    
+    const nutrient = recipe.nutrition.nutrients.find((n: any) => n.name === name);
+    return nutrient ? `${nutrient.amount}${nutrient.unit}` : 'N/A';
+  }
+
   loadFromLocal(id: string) {
     this.recipeService.getLocalRecipeById(id).subscribe({
       next: (data) => {
