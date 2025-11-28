@@ -1,0 +1,68 @@
+<div class="container mt-5 mb-5">
+  @if (loading) {
+    <div class="text-center p-5">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-3 text-muted">Fetching recipe details...</p>
+    </div>
+  }
+
+  @if (!loading && !recipe) {
+    <div class="alert alert-warning text-center">
+      <h3>Recipe Not Found</h3>
+      <p>We couldn't find the details for this recipe.</p>
+      <a routerLink="/" class="btn btn-dark">Go Back Home</a>
+    </div>
+  }
+
+  @if (!loading && recipe) {
+    <div class="card shadow-sm border-0">
+      <img [src]="recipe.image" class="card-img-top" [alt]="recipe.title" style="height: 400px; object-fit: cover;">
+      
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h1 class="fw-bold text-dark mb-0">{{ recipe.title }}</h1>
+          <a routerLink="/" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+          </a>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="p-3 bg-light rounded">
+              <h4 class="mb-3 text-success fw-bold">Ingredients</h4>
+              <ul class="list-group list-group-flush bg-transparent">
+                @for (ing of recipe.extendedIngredients; track ing.id) {
+                  <li class="list-group-item bg-transparent ps-0">
+                    • {{ ing.original }}
+                  </li>
+                } @empty {
+                  <li class="list-group-item bg-transparent">No ingredients listed.</li>
+                }
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="ps-md-4 mt-4 mt-md-0">
+              <h4 class="mb-3 text-success fw-bold">Instructions</h4>
+              
+              @if (recipe.analyzedInstructions?.length > 0) {
+                <ol class="list-group list-group-numbered">
+                  @for (step of recipe.analyzedInstructions[0].steps; track step.number) {
+                    <li class="list-group-item border-0 mb-2">
+                      {{ step.step }}
+                    </li>
+                  }
+                </ol>
+              } @else {
+                <p class="lead fs-6" [innerHTML]="recipe.instructions || recipe.summary"></p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,13 @@
+.list-group-numbered > .list-group-item {
+    display: list-item; /* 恢复数字显示 */
+}
+
+/* 针对 innerHTML 里的链接颜色 */
+a {
+    color: #2c7a38;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,17 @@
+/* 自定义绿色按钮 */
+.custom-green-btn {
+    background-color: #2c7a38;
+    transition: background-color 0.2s;
+    border-top-right-radius: 8px; /*稍微圆润一点*/
+    border-bottom-right-radius: 8px;
+}
+
+.custom-green-btn:hover {
+    background-color: #215c2b; /* 悬停变深 */
+}
+
+/* 输入框左边的圆角处理 */
+.input-group-text {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}

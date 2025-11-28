@@ -1,0 +1,44 @@
+/* 卡片整体样式 */
+.recipe-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 12px; /* 圆角稍微加大一点 */
+    overflow: hidden;
+}
+
+.recipe-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; /* 阴影也加深一点，更有质感 */
+}
+
+/* 修改重点：图片高度 */
+.card-img-top {
+    height: 450px; /* 从 250px 增加到 450px，更大气 */
+    object-fit: cover;
+}
+
+/* 简介文字行数限制 */
+.summary-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem; /* 字体稍微加大一点点 */
+    line-height: 1.7;
+}
+
+.summary-text ::ng-deep a {
+    color: inherit; 
+    text-decoration: none;
+    pointer-events: none;
+}
+
+.btn-icon:hover {
+    color: #2c7a38 !important;
+    transform: scale(1.1);
+}
+
+.card-title {
+    color: #333;
+    font-size: 2rem; /* 标题字号也加大 */
+}

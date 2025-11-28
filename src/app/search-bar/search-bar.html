@@ -1,0 +1,21 @@
+<div class="input-group input-group-lg shadow-sm">
+  <span class="input-group-text bg-white border-0 ps-4 text-muted">
+    <i class="bi bi-search"></i>
+  </span>
+  
+  <input 
+    #searchInput
+    type="text" 
+    class="form-control border-0 ps-2" 
+    placeholder="What do you want to cook today? (e.g. Pasta)"
+    (keyup.enter)="triggerSearch(searchInput.value)"
+  >
+  
+  <button 
+    class="btn custom-green-btn text-white px-4 fw-bold" 
+    type="button"
+    (click)="triggerSearch(searchInput.value)"
+  >
+    SEARCH
+  </button>
+</div>

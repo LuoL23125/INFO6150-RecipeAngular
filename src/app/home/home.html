@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <div class="text-center mb-5">
+    @if (isSingleView) {
+      <h1 class="display-4 fw-bold mb-3">Today's Inspiration</h1>
+      <p class="lead text-muted mb-4">A random recipe picked just for you</p>
+    } @else {
+      <h1 class="display-4 fw-bold mb-3">Search Results</h1>
+      <p class="lead text-muted mb-4">Discover delicious recipes</p>
+    }
+    
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <app-search-bar (search)="performSearch($event)"></app-search-bar>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center g-4">
+    @for (item of recipes; track item.id) {
+       <div [ngClass]="isSingleView ? 'col-12 col-md-10 col-lg-8' : 'col-12 col-md-6 col-lg-4'">
+          <app-recipe-card [recipe]="item" [isHero]="isSingleView"></app-recipe-card>
+       </div>
+    } @empty {
+       <div class="text-center mt-5">
+         <p class="text-muted">No recipes found.</p>
+       </div>
+    }
+  </div>
+</div>

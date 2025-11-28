@@ -1,0 +1,82 @@
+/* 自定义绿色背景 */
+.custom-green-bg {
+    background-color: #2c7a38;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+}
+
+/* HOME 按钮样式 */
+.home-btn {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: white !important;
+    transition: background-color 0.2s;
+}
+
+.home-btn:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* 橙色头像圆圈 */
+.avatar-circle {
+    width: 42px;
+    height: 42px;
+    background-color: #ff6b00;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    user-select: none;
+    transition: transform 0.1s;
+    border: 2px solid rgba(255,255,255,0.2);
+}
+
+.avatar-circle:hover {
+    transform: scale(1.05);
+}
+
+/* === 修改重点：下拉菜单定位 === */
+.custom-dropdown {
+    /* 1. 绝对定位 */
+    position: absolute;
+    
+    /* 2. 让菜单顶部紧贴父元素的底部 (即导航栏底部) */
+    top: 100%; 
+    
+    /* 3. 右对齐 */
+    right: 0; 
+    
+    /* 4. 加一点顶部间距，让它离导航栏有一点空隙，不再覆盖 */
+    margin-top: 15px; 
+    
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border: none;
+    min-width: 200px;
+    
+    /* 5. 确保层级足够高，盖过页面其他内容，但不会被导航栏本身遮挡 */
+    z-index: 1050; 
+}
+
+/* 增加一个小三角箭头 (可选，为了更好看) */
+.custom-dropdown::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: 15px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+}
+
+.dropdown-item:active {
+    background-color: #2c7a38;
+}

@@ -1,0 +1,47 @@
+<div class="container mt-5">
+  <div class="form-signup shadow p-4 rounded bg-white">
+    <h2 class="h3 mb-3 fw-normal text-center">Create Account</h2>
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="row g-2 mb-3">
+        <div class="col-md">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="firstName" placeholder="First Name" [(ngModel)]="formData.firstName" name="firstName" required>
+            <label for="firstName">First Name</label>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name" [(ngModel)]="formData.lastName" name="lastName" required>
+            <label for="lastName">Last Name</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="email" placeholder="name@example.com" [(ngModel)]="formData.email" name="email" required>
+        <label for="email">Email address</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="password" placeholder="Password" [(ngModel)]="formData.password" name="password" required>
+        <label for="password">Password</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+        <label for="confirmPassword">Confirm Password</label>
+      </div>
+
+      <button class="w-100 btn btn-lg custom-green-btn" type="submit">Register</button>
+      
+      <div class="text-center mt-3">
+        <p>Already have an account? <a routerLink="/login" class="text-success">Login</a></p>
+      </div>
+    </form>
+  </div>
+</div>
