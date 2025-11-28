@@ -43,17 +43,6 @@
   ],
   "favorites": [
     {
-      "id": "29ec",
-      "userId": "1",
-      "recipeId": "1",
-      "title": "Fried Anchovies with Sage",
-      "image": "https://img.spoonacular.com/recipes/1-556x370.jpg",
-      "readyInMinutes": 45,
-      "servings": 3,
-      "summary": "Fried Anchovies with Sage could be just the <b>dairy free and pescatarian</b> recipe you've been looking for. One serving contains <b>594 calories</b>, <b>68g of protein</b>, and <b>19g of fat</b>. Th",
-      "addedAt": "2025-11-08T04:24:11.812Z"
-    },
-    {
       "id": "beea",
       "userId": "82c9",
       "recipeId": 656817,
@@ -74,39 +63,6 @@
       "servings": 4,
       "summary": "If you want to add more <b>gluten free, dairy free, paleolithic, and lacto ovo vegetarian</b> recipes to your collection, Cold Fennel and Zucchini Noodle Side Salad might be a recipe you should try. T",
       "addedAt": "2025-11-08T04:24:47.807Z"
-    },
-    {
-      "id": "315a",
-      "userId": "82c9",
-      "recipeId": 641631,
-      "title": "Dragon Salad - Couscous Summer Salad",
-      "image": "https://img.spoonacular.com/recipes/641631-312x231.jpg",
-      "readyInMinutes": 90,
-      "servings": 6,
-      "summary": "Dragon Salad - Couscous Summer Salad is a <b>lacto ovo vegetarian</b> recipe with 6 servings. For <b>$4.04 per serving</b>, this recipe <b>covers 16%</b> of your daily requirements of vitamins and min",
-      "addedAt": "2025-11-08T04:24:48.889Z"
-    },
-    {
-      "id": "632e",
-      "userId": "1",
-      "recipeId": "642546",
-      "title": "Falafels With Tahini Sauce",
-      "image": "https://img.spoonacular.com/recipes/642546-556x370.jpg",
-      "readyInMinutes": 45,
-      "servings": 4,
-      "summary": "If you have about <b>45 minutes</b> to spend in the kitchen, Falafels With Tahini Sauce might be a super <b>dairy free, lacto ovo vegetarian, and vegan</b> recipe to try. This recipe makes 4 servings ",
-      "addedAt": "2025-11-11T17:17:51.837Z"
-    },
-    {
-      "id": "b443",
-      "userId": "82c9",
-      "recipeId": "651994",
-      "title": "Miniature Fruit Tarts",
-      "image": "https://img.spoonacular.com/recipes/651994-312x231.jpg",
-      "readyInMinutes": 45,
-      "servings": 60,
-      "summary": "Miniature Fruit Tarts takes approximately <b>45 minutes</b> from beginning to end. For <b>89 cents per serving</b>, you get a dessert that serves 60. Watching your figure? This lacto ovo vegetarian re",
-      "addedAt": "2025-11-11T20:28:45.219Z"
     },
     {
       "id": "acde",
@@ -131,16 +87,6 @@
       "addedAt": "2025-11-12T00:08:58.835Z"
     },
     {
-      "id": "7284",
-      "userId": "1",
-      "recipeId": 1762906417378,
-      "title": "A",
-      "image": "https://via.placeholder.com/556x370?text=A",
-      "servings": 4,
-      "summary": "",
-      "addedAt": "2025-11-12T00:14:10.200Z"
-    },
-    {
       "id": "836f",
       "userId": "f220",
       "recipeId": 637067,
@@ -150,6 +96,59 @@
       "servings": 2,
       "summary": "Caramelized Tofu & Galan Apple Salad is a main course that serves 2. For <b>$2.31 per serving</b>, this recipe <b>covers 15%</b> of your daily requirements of vitamins and minerals. One serving contai",
       "addedAt": "2025-11-12T00:18:16.827Z"
+    },
+    {
+      "id": "ff10",
+      "userId": "1",
+      "recipeId": "1",
+      "title": "Fried Anchovies with Sage",
+      "image": "https://img.spoonacular.com/recipes/1-556x370.jpg",
+      "readyInMinutes": 45,
+      "servings": 3,
+      "summary": "Fried Anchovies with Sage could be just the <b>dairy free and pescatarian</b> recipe you've been looking for. One serving contains <b>594 calories</b>, <b>68g of protein</b>, and <b>19g of fat</b>. This recipe serves 3. For <b>$5.61 per serving</b>, this recipe <b>covers 26%</b> of your daily requirements of vitamins and minerals. 3 people have tried and liked this recipe. Not a lot of people really liked this main course. A mixture of seltzer water, anchovies, baking powder, and a handful of other ingredients are all it takes to make this recipe so scrumptious. It is brought to you by latavolamarcherecipebox.blogspot.com. From preparation to the plate, this recipe takes around <b>45 minutes</b>. With a spoonacular <b>score of 72%</b>, this dish is good. Similar recipes are <a href=\"https://spoonacular.com/recipes/broccoli-rabe-with-tomatoes-anchovies-spaghetti-636212\">Broccoli Rabe with Tomatoes, Anchovies & Spaghetti</a>, <a href=\"https://spoonacular.com/recipes/grilled-peppers-with-anchovies-feta-cheese-and-spaghetti-645795\">Grilled Peppers With Anchovies, Feta Cheese and Spaghetti</a>, and <a href=\"https://spoonacular.com/recipes/italian-string-beans-with-anchovies-and-breadcrumbs-648259\">Italian String Beans With Anchovies and Breadcrumbs</a>.",
+      "addedAt": "2025-11-28T00:52:07.388Z"
+    },
+    {
+      "id": "81d4",
+      "userId": "1",
+      "recipeId": "642546",
+      "title": "Falafels With Tahini Sauce",
+      "image": "https://img.spoonacular.com/recipes/642546-556x370.jpg",
+      "readyInMinutes": 45,
+      "servings": 4,
+      "summary": "If you have about <b>45 minutes</b> to spend in the kitchen, Falafels With Tahini Sauce might be a super <b>dairy free, lacto ovo vegetarian, and vegan</b> recipe to try. This recipe makes 4 servings with <b>360 calories</b>, <b>11g of protein</b>, and <b>24g of fat</b> each. For <b>$1.28 per serving</b>, this recipe <b>covers 20%</b> of your daily requirements of vitamins and minerals. 2 people were glad they tried this recipe. This recipe from Foodista requires tahini sauce, pepper flakes, garlic, and flour. Only a few people really liked this hor d'oeuvre. Overall, this recipe earns an <b>excellent spoonacular score of 86%</b>. Users who liked this recipe also liked <a href=\"https://spoonacular.com/recipes/falafels-and-tahini-sauce-80833\">Falafels And Tahini Sauce</a>, <a href=\"https://spoonacular.com/recipes/quinoa-falafels-with-tahini-sauce-23306\">Quinoa Falafels With Tahini Sauce</a>, and <a href=\"https://spoonacular.com/recipes/tahini-sauce-279696\">Tahini Sauce</a>.",
+      "addedAt": "2025-11-28T00:53:01.637Z"
+    },
+    {
+      "id": "11b8",
+      "userId": "1",
+      "recipeId": "639482",
+      "title": "Cinnamon Rolls by Bing",
+      "image": "https://img.spoonacular.com/recipes/639482-556x370.jpg",
+      "readyInMinutes": 45,
+      "servings": 25,
+      "summary": "Cinnamon Rolls by Bing could be just the <b>lacto ovo vegetarian</b> recipe you've been looking for. One serving contains <b>632 calories</b>, <b>8g of protein</b>, and <b>35g of fat</b>. For <b>93 cents per serving</b>, you get a breakfast that serves 25. 4 people were glad they tried this recipe. This recipe from Foodista requires baking powder, butter, pecan nuts, and caster sugar. From preparation to the plate, this recipe takes roughly <b>45 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 30%</b>, which is rather bad. Similar recipes are <a href=\"https://spoonacular.com/recipes/sausage-rolls-by-bing-659380\">Sausage Rolls By Bing</a>, <a href=\"https://spoonacular.com/recipes/slow-cooker-cinnamon-roll-fondue-with-20-minute-miniature-cinnamon-rolls-1195039\">{Slow Cooker} Cinnamon Roll Fondue with 20-minute Miniature Cinnamon Rolls</a>, and <a href=\"https://spoonacular.com/recipes/slow-cooker-cinnamon-roll-fondue-with-20-minute-miniature-cinnamon-rolls-1279675\">{Slow Cooker} Cinnamon Roll Fondue with 20-minute Miniature Cinnamon Rolls</a>.",
+      "addedAt": "2025-11-28T00:53:09.731Z"
+    },
+    {
+      "id": "b9ef",
+      "userId": "82c9",
+      "recipeId": "651994",
+      "title": "Miniature Fruit Tarts",
+      "image": "https://img.spoonacular.com/recipes/651994-312x231.jpg",
+      "readyInMinutes": 45,
+      "servings": 60,
+      "summary": "Miniature Fruit Tarts takes approximately <b>45 minutes</b> from beginning to end. For <b>89 cents per serving</b>, you get a dessert that serves 60. Watching your figure? This lacto ovo vegetarian re",
+      "addedAt": "2025-11-28T01:05:39.558Z"
+    },
+    {
+      "id": "ecbc",
+      "userId": "1",
+      "recipeId": "1762609773179",
+      "title": "Homemade Pasta Carbonara",
+      "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3",
+      "servings": 4,
+      "addedAt": "2025-11-28T01:27:17.671Z"
     }
   ],
   "mealPlans": [],
@@ -158,7 +157,7 @@
     {
       "id": "1762609773179",
       "title": "Homemade Pasta Carbonara",
-      "description": "A classic Italian pasta dish with eggs, cheese, and bacon",
+      "description": "A classic Italian pasta dish with eggs, cheese, and bacon. Very Good",
       "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3",
       "servings": 4,
       "prepTime": 15,
@@ -184,35 +183,32 @@
       "notes": "",
       "userId": "1",
       "createdAt": "2025-11-08T13:49:33.179Z",
-      "updatedAt": "2025-11-08T13:49:33.179Z"
+      "updatedAt": "2025-11-28T01:38:10.905Z",
+      "readyInMinutes": 45
     },
     {
-      "id": "1762906417378",
-      "title": "A",
-      "description": "sdasd",
-      "image": "https://via.placeholder.com/556x370?text=A",
-      "servings": 4,
-      "prepTime": 12,
-      "cookTime": 30,
-      "totalTime": 42,
-      "difficulty": "medium",
-      "cuisine": "Italian",
-      "category": "main",
+      "id": "d91c",
+      "title": "My Special Burger",
+      "description": "This is a burger",
+      "image": "https://via.placeholder.com/556x370?text=My+Delicious+Food",
+      "servings": 2,
+      "prepTime": 15,
+      "cookTime": 15,
       "ingredients": [
-        "egg",
-        "pasta"
+        "Bun",
+        "Beef patty",
+        "Cheese"
       ],
       "instructions": [
-        "put water",
-        "cook",
-        "serve"
+        "Grill the patty",
+        "Assemble"
       ],
-      "tags": [],
-      "isPublic": false,
-      "notes": "",
-      "userId": "1",
-      "createdAt": "2025-11-12T00:13:37.378Z",
-      "updatedAt": "2025-11-12T00:13:37.378Z"
+      "isPublic": true,
+      "totalTime": 30,
+      "readyInMinutes": 30,
+      "userId": "82c9",
+      "createdAt": "2025-11-28T01:17:14.981Z",
+      "updatedAt": "2025-11-28T01:17:14.981Z"
     }
   ],
   "cachedRecipes": [

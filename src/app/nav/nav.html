@@ -21,15 +21,22 @@
 
             <ul class="dropdown-menu dropdown-menu-end custom-dropdown" [class.show]="isDropdownOpen">
               <li>
-                <a class="dropdown-item" href="#" (click)="closeDropdown()">
+                <a class="dropdown-item" [routerLink]="['/profile']" [queryParams]="{tab: 'info'}" (click)="closeDropdown()">
                   <i class="bi bi-person-circle me-2"></i> Profile
                 </a>
               </li>
               <li>
-                <a class="dropdown-item" href="#" (click)="closeDropdown()">
+                <a class="dropdown-item" [routerLink]="['/profile']" [queryParams]="{tab: 'favorites'}" (click)="closeDropdown()">
                   <i class="bi bi-heart-fill me-2 text-danger"></i> My Favorites
                 </a>
               </li>
+              
+              <li>
+                <a class="dropdown-item" [routerLink]="['/profile']" [queryParams]="{tab: 'custom'}" (click)="closeDropdown()">
+                  <i class="bi bi-journal-plus me-2 text-success"></i> My Recipes
+                </a>
+              </li>
+              
               <li><hr class="dropdown-divider"></li>
               <li>
                 <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">

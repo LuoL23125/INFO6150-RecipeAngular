@@ -33,13 +33,25 @@
             <div class="p-3 bg-light rounded">
               <h4 class="mb-3 text-success fw-bold">Ingredients</h4>
               <ul class="list-group list-group-flush bg-transparent">
-                @for (ing of recipe.extendedIngredients; track ing.id) {
-                  <li class="list-group-item bg-transparent ps-0">
-                    • {{ ing.original }}
-                  </li>
-                } @empty {
+                
+                @if (recipe.extendedIngredients) {
+                  @for (ing of recipe.extendedIngredients; track ing.id) {
+                    <li class="list-group-item bg-transparent ps-0">
+                      • {{ ing.original }}
+                    </li>
+                  }
+                } 
+                @else if (recipe.ingredients && isList(recipe.ingredients)) {
+                  @for (ing of recipe.ingredients; track $index) {
+                    <li class="list-group-item bg-transparent ps-0">
+                      • {{ ing }}
+                    </li>
+                  }
+                }
+                @else {
                   <li class="list-group-item bg-transparent">No ingredients listed.</li>
                 }
+
               </ul>
             </div>
           </div>
@@ -56,7 +68,17 @@
                     </li>
                   }
                 </ol>
-              } @else {
+              } 
+              @else if (recipe.instructions && isList(recipe.instructions)) {
+                <ol class="list-group list-group-numbered">
+                  @for (step of recipe.instructions; track $index) {
+                    <li class="list-group-item border-0 mb-2">
+                      {{ step }}
+                    </li>
+                  }
+                </ol>
+              }
+              @else {
                 <p class="lead fs-6" [innerHTML]="recipe.instructions || recipe.summary"></p>
               }
             </div>

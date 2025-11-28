@@ -1,0 +1,88 @@
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+          <h2 class="h4 mb-0 fw-bold text-success">Add New Recipe</h2>
+        </div>
+        <div class="card-body p-4">
+          
+          <form (ngSubmit)="onSubmit()">
+            <h5 class="mb-3 text-muted border-bottom pb-2">Basic Info</h5>
+            
+            <div class="mb-3">
+              <label class="form-label">Recipe Title</label>
+              <input type="text" class="form-control" [(ngModel)]="recipeData.title" name="title" required placeholder="e.g. Grandma's Apple Pie">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" rows="3" [(ngModel)]="recipeData.description" name="description" placeholder="Short description..."></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Image URL</label>
+              <input type="url" class="form-control" [(ngModel)]="recipeData.image" name="image" placeholder="https://...">
+              <div class="form-text">Paste a URL for your food image.</div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <label class="form-label">Servings</label>
+                <input type="number" class="form-control" [(ngModel)]="recipeData.servings" name="servings">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Prep Time (min)</label>
+                <input type="number" class="form-control" [(ngModel)]="recipeData.prepTime" name="prepTime">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Cook Time (min)</label>
+                <input type="number" class="form-control" [(ngModel)]="recipeData.cookTime" name="cookTime">
+              </div>
+            </div>
+
+            <h5 class="mb-3 text-muted border-bottom pb-2">Ingredients</h5>
+            @for (ing of recipeData.ingredients; track trackByIndex($index, ing)) {
+              <div class="input-group mb-2">
+                <span class="input-group-text bg-light">{{ $index + 1 }}.</span>
+                <input type="text" class="form-control" [(ngModel)]="recipeData.ingredients[$index]" [name]="'ingredient' + $index" placeholder="e.g. 2 cups flour">
+                <button type="button" class="btn btn-outline-danger" (click)="removeIngredient($index)" [disabled]="recipeData.ingredients.length === 1">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            }
+            <button type="button" class="btn btn-outline-green btn-sm mt-2" (click)="addIngredient()">
+              <i class="bi bi-plus-circle me-1"></i> Add Ingredient
+            </button>
+
+
+            <h5 class="mt-4 mb-3 text-muted border-bottom pb-2">Instructions</h5>
+            @for (step of recipeData.instructions; track trackByIndex($index, step)) {
+              <div class="input-group mb-2">
+                <span class="input-group-text bg-light">Step {{ $index + 1 }}</span>
+                <textarea class="form-control" rows="2" [(ngModel)]="recipeData.instructions[$index]" [name]="'instruction' + $index" placeholder="What to do..."></textarea>
+                <button type="button" class="btn btn-outline-danger" (click)="removeInstruction($index)" [disabled]="recipeData.instructions.length === 1">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            }
+            <button type="button" class="btn btn-outline-green btn-sm mt-2" (click)="addInstruction()">
+              <i class="bi bi-plus-circle me-1"></i> Add Step
+            </button>
+
+
+            <div class="form-check form-switch mt-5 mb-4">
+              <input class="form-check-input" type="checkbox" id="isPublic" [(ngModel)]="recipeData.isPublic" name="isPublic">
+              <label class="form-check-label" for="isPublic">Make this recipe public?</label>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn custom-green-btn btn-lg">Save Recipe</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

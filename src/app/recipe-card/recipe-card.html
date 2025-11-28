@@ -15,7 +15,7 @@
       {{ recipe.title }}
     </h3>
     
-    <div class="card-text text-muted mb-4 summary-text" [innerHTML]="recipe.summary"></div>
+    <div class="card-text text-muted mb-4 summary-text" [innerHTML]="recipe.summary || recipe.description"></div>
     
     <div class="d-flex gap-4 mb-4 text-secondary small fw-bold">
       <div class="d-flex align-items-center">
@@ -29,11 +29,23 @@
     </div>
     
     <div class="mt-auto pt-3 border-top d-flex align-items-center justify-content-between">
-      <a [routerLink]="['/recipe', recipe.id]" class="btn btn-link text-success text-decoration-none p-0 fw-bold d-flex align-items-center">
+      
+      <a [routerLink]="detailLink" class="btn btn-link text-success text-decoration-none p-0 fw-bold d-flex align-items-center">
         <i class="bi bi-eye-fill me-2"></i> VIEW RECIPE
       </a>
       
-      <div class="d-flex gap-3">
+      <div class="d-flex align-items-center gap-2">
+        
+        @if (isOwner) {
+          <button class="btn btn-icon p-0 text-primary me-1" (click)="onEdit($event)" title="Edit">
+            <i class="bi bi-pencil-square fs-5"></i>
+          </button>
+          <button class="btn btn-icon p-0 text-danger me-2" (click)="onDelete($event)" title="Delete">
+            <i class="bi bi-trash fs-5"></i>
+          </button>
+          <div class="vr h-50 mx-1"></div>
+        }
+
         <button 
           class="btn btn-icon p-0" 
           (click)="onFavoriteClick($event)"
