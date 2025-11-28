@@ -1,19 +1,51 @@
 <div class="container mt-5">
+  
   <div class="text-center mb-5">
+    
     @if (isSingleView) {
-      <h1 class="display-4 fw-bold mb-3">Today's Inspiration</h1>
-      <p class="lead text-muted mb-4">A random recipe picked just for you</p>
+      <h1 class="display-4 fw-bold mb-3 text-dark">Today's Inspiration</h1>
+      <p class="lead text-muted mb-4">Discover a random recipe picked just for you</p>
     } @else {
-      <h1 class="display-4 fw-bold mb-3">Search Results</h1>
-      <p class="lead text-muted mb-4">Discover delicious recipes</p>
+      <h1 class="display-4 fw-bold mb-3 text-dark">Search Results</h1>
+      <p class="lead text-muted mb-4">Explore delicious recipes matching your taste</p>
     }
     
     <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6">
+      <div class="col-12 col-md-10 col-lg-8">
         <app-search-bar (search)="performSearch($event)"></app-search-bar>
       </div>
     </div>
   </div>
+
+  @if (!authService.currentUser() && showBanner) {
+    <div class="row justify-content-center mb-5 fade-in">
+      <div class="col-12 col-lg-10">
+        <div class="promo-banner shadow-sm d-flex flex-column flex-md-row align-items-center justify-content-between p-4 rounded">
+          
+          <div class="d-flex align-items-center mb-3 mb-md-0">
+            <div class="banner-icon me-3">🎉</div>
+            <div class="text-white text-start">
+              <h4 class="fw-bold mb-1">Join Our Community!</h4>
+              <p class="mb-0 small opacity-90">Create a free account to save favorites & create meal plans.</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-3">
+            <a routerLink="/register" class="btn btn-white fw-bold">
+              <i class="bi bi-person-plus-fill me-1"></i> SIGN UP FREE
+            </a>
+            <a routerLink="/login" class="btn btn-outline-light fw-bold">
+              <i class="bi bi-box-arrow-in-right me-1"></i> LOGIN
+            </a>
+            <button class="btn btn-link text-white p-0 ms-2" (click)="closeBanner()">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  }
 
   <div class="row justify-content-center g-4">
     @for (item of recipes; track item.id) {
@@ -22,7 +54,8 @@
        </div>
     } @empty {
        <div class="text-center mt-5">
-         <p class="text-muted">No recipes found.</p>
+         <i class="bi bi-search display-1 text-muted opacity-25"></i>
+         <p class="text-muted mt-3">No recipes found. Try searching for something else!</p>
        </div>
     }
   </div>
