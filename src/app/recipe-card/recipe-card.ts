@@ -32,14 +32,16 @@ export class RecipeCard {
     return user && this.recipe.userId && String(this.recipe.userId) === String(user.id);
   }
 
-  // === 新增：计算详情页的链接 ===
+  // === 修复后的逻辑 ===
   get detailLink(): any[] {
-    // 我们的逻辑：只有自定义食谱才有 'userId' 字段
-    // 如果是自定义食谱，ID 前面加 'custom-'
-    if (this.recipe.userId) {
+    // 1. 收藏夹里的数据：有 userId，但也有 recipeId (指向原始ID) -> 应该是普通链接
+    // 2. 自定义食谱：有 userId，但没有 recipeId -> 应该是 custom 链接
+    
+    if (this.recipe.userId && !this.recipe.recipeId) {
       return ['/recipe', `custom-${this.recipe.id}`];
     }
-    // 如果是 API 食谱，直接用 ID
+    
+    // 默认情况 (API 食谱 / 收藏的 API 食谱 / 缓存食谱)
     return ['/recipe', this.recipe.id];
   }
 

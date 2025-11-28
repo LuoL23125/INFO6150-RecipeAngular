@@ -13,6 +13,15 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-10 col-lg-8">
         <app-search-bar (search)="performSearch($event)"></app-search-bar>
+        
+        @if (authService.currentUser()) {
+          <div class="text-center mt-3 fade-in">
+            <a routerLink="/advanced-search" class="text-decoration-none fw-bold text-success">
+              <i class="bi bi-sliders me-1"></i> Use Advanced Filters
+            </a>
+          </div>
+        }
+        
       </div>
     </div>
   </div>

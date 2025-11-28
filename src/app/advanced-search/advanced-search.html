@@ -1,0 +1,93 @@
+<div class="container mt-5 mb-5">
+  <div class="row">
+    
+    <div class="col-md-4 col-lg-3 mb-4">
+      <div class="card shadow-sm border-0 sticky-top" style="top: 20px; z-index: 100;">
+        <div class="card-header bg-white py-3">
+          <h5 class="mb-0 fw-bold text-success">
+            <i class="bi bi-sliders me-2"></i> Filters
+          </h5>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onSearch()">
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold small text-muted">KEYWORDS</label>
+              <input type="text" class="form-control" [(ngModel)]="filters.query" name="query" placeholder="e.g. Pasta">
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold small text-muted">DIETS</label>
+              @for (diet of availableDiets; track diet) {
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [id]="'diet-'+diet" 
+                         (change)="onCheckboxChange($event, filters.diets, diet)">
+                  <label class="form-check-label" [for]="'diet-'+diet">{{ diet }}</label>
+                </div>
+              }
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold small text-muted">INTOLERANCES</label>
+              @for (intel of availableIntolerances; track intel) {
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [id]="'intel-'+intel"
+                         (change)="onCheckboxChange($event, filters.intolerances, intel)">
+                  <label class="form-check-label" [for]="'intel-'+intel">{{ intel }}</label>
+                </div>
+              }
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold small text-muted">INCLUDE INGREDIENTS</label>
+              <input type="text" class="form-control" [(ngModel)]="filters.ingredients" name="ingredients" placeholder="chicken, tomato">
+              <div class="form-text small">Comma separated</div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn custom-green-btn fw-bold">
+                Apply Filters
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-lg-9">
+      <h2 class="fw-bold mb-4">Advanced Search</h2>
+
+      @if (isSearching) {
+        <div class="text-center py-5">
+          <div class="spinner-border text-success" role="status"></div>
+          <p class="mt-2 text-muted">Filtering recipes...</p>
+        </div>
+      } 
+      
+      @else if (hasSearched && recipes.length === 0) {
+        <div class="alert alert-light text-center border p-5">
+          <i class="bi bi-emoji-frown display-4 text-muted"></i>
+          <h4 class="mt-3">No matches found</h4>
+          <p class="text-muted">Try adjusting your filters to be less specific.</p>
+        </div>
+      } 
+      
+      @else {
+        <div class="row g-4">
+          @for (item of recipes; track item.id) {
+            <div class="col-12 col-md-6 col-lg-4">
+              <app-recipe-card [recipe]="item"></app-recipe-card>
+            </div>
+          } @empty {
+            <div class="text-center py-5 text-muted">
+              <i class="bi bi-search display-1 opacity-25"></i>
+              <p class="mt-3 lead">Select filters and click Apply to start searching.</p>
+            </div>
+          }
+        </div>
+      }
+
+    </div>
+  </div>
+</div>

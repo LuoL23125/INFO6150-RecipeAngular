@@ -5,6 +5,7 @@ import { Login } from './login/login';
 import { Register } from './register/register';
 import { Profile } from './profile/profile';
 import { AddRecipe } from './add-recipe/add-recipe';
+import { AdvancedSearch } from './advanced-search/advanced-search'; // <--- 新增
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -12,7 +13,8 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'profile', component: Profile },
-  { path: 'add-recipe', component: AddRecipe }, 
-  { path: 'edit-recipe/:id', component: AddRecipe }, // <--- 新增：复用组件用于编辑
+  { path: 'add-recipe', component: AddRecipe },
+  { path: 'edit-recipe/:id', component: AddRecipe },
+  { path: 'advanced-search', component: AdvancedSearch }, // <--- 新增路由
   { path: '**', redirectTo: '' }
 ];

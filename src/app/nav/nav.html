@@ -30,13 +30,16 @@
                   <i class="bi bi-heart-fill me-2 text-danger"></i> My Favorites
                 </a>
               </li>
-              
               <li>
                 <a class="dropdown-item" [routerLink]="['/profile']" [queryParams]="{tab: 'custom'}" (click)="closeDropdown()">
                   <i class="bi bi-journal-plus me-2 text-success"></i> My Recipes
                 </a>
               </li>
-              
+              <li>
+                <a class="dropdown-item" routerLink="/advanced-search" (click)="closeDropdown()">
+                  <i class="bi bi-sliders me-2 text-primary"></i> Advanced Search
+                </a>
+              </li>
               <li><hr class="dropdown-divider"></li>
               <li>
                 <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
