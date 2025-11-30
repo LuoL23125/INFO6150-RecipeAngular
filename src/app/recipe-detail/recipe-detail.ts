@@ -2,11 +2,12 @@ import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { RecipeService } from '../services/recipe';
+import { Review } from '../review/review'; // <--- 1. 引入 Review 组件
 
 @Component({
   selector: 'app-recipe-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, Review], // <--- 2. 注册
   templateUrl: './recipe-detail.html',
   styleUrls: ['./recipe-detail.css']
 })
@@ -17,19 +18,21 @@ export class RecipeDetail implements OnInit {
 
   recipe: any = null;
   loading = true;
+  // 保存当前 ID，传给子组件
+  currentId: string | null = null;
 
   ngOnInit() {
     const rawId = this.route.snapshot.paramMap.get('id');
     
     if (rawId) {
-      // === 修改重点：检查前缀 ===
+      // 这里的 rawId 可能是 "custom-123" 或者 "123"
+      // 我们需要把这个 ID 原封不动传给 Review 组件，作为关联 ID
+      this.currentId = rawId;
+
       if (rawId.startsWith('custom-')) {
-        // 如果是 custom- 开头，去掉前缀，直接查 Custom 数据库
         const realId = rawId.replace('custom-', '');
-        console.log('检测到自定义食谱 URL，直接加载 Custom ID:', realId);
         this.loadFromCustom(realId);
       } else {
-        // 否则走正常的 API 流程
         this.loadRecipeDetail(rawId);
       }
     }
@@ -39,10 +42,14 @@ export class RecipeDetail implements OnInit {
     return Array.isArray(val);
   }
 
+  getNutrient(recipe: any, name: string): string {
+    if (!recipe.nutrition || !recipe.nutrition.nutrients) return 'N/A';
+    const nutrient = recipe.nutrition.nutrients.find((n: any) => n.name === name);
+    return nutrient ? `${nutrient.amount}${nutrient.unit}` : 'N/A';
+  }
+
   loadRecipeDetail(id: string) {
     this.loading = true;
-    
-    // 1. 尝试请求 API
     this.recipeService.getRecipeById(id).subscribe({
       next: (data) => {
         this.recipe = data;
@@ -50,19 +57,9 @@ export class RecipeDetail implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.warn('API 失败，尝试查找本地缓存...', err);
-        // 2. API 失败 -> 查 Cached
         this.loadFromLocal(id);
       }
     });
-  }
-
-  // === 新增：获取特定营养成分的值 ===
-  getNutrient(recipe: any, name: string): string {
-    if (!recipe.nutrition || !recipe.nutrition.nutrients) return 'N/A';
-    
-    const nutrient = recipe.nutrition.nutrients.find((n: any) => n.name === name);
-    return nutrient ? `${nutrient.amount}${nutrient.unit}` : 'N/A';
   }
 
   loadFromLocal(id: string) {
@@ -73,8 +70,6 @@ export class RecipeDetail implements OnInit {
           this.loading = false;
           this.cdr.detectChanges();
         } else {
-          // 3. Cached 也没找到 -> 尝试 Custom (兜底)
-          // 防止用户手动输了 ID 但没加 custom- 前缀
           this.loadFromCustom(id);
         }
       },
@@ -85,11 +80,7 @@ export class RecipeDetail implements OnInit {
   loadFromCustom(id: string) {
     this.recipeService.getCustomRecipeById(id).subscribe({
       next: (data) => {
-        if (data) {
-          this.recipe = data;
-        } else {
-          console.error('Custom Recipe 也未找到');
-        }
+        if (data) this.recipe = data;
         this.loading = false;
         this.cdr.detectChanges();
       },

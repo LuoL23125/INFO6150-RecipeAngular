@@ -61,7 +61,7 @@
                     <span class="fw-bold">{{ getNutrient(recipe, 'Carbohydrates') }}</span>
                   </div>
                 } @else {
-                  <p class="text-muted small mb-0">Nutrition data not available for this recipe.</p>
+                  <p class="text-muted small mb-0">Nutrition data not available.</p>
                 }
               </div>
             </div>
@@ -75,13 +75,15 @@
                       • {{ ing.original }}
                     </li>
                   }
-                } @else if (recipe.ingredients && isList(recipe.ingredients)) {
+                } 
+                @else if (recipe.ingredients && isList(recipe.ingredients)) {
                   @for (ing of recipe.ingredients; track $index) {
                     <li class="list-group-item bg-transparent ps-0">
                       • {{ ing }}
                     </li>
                   }
-                } @else {
+                } 
+                @else {
                   <li class="list-group-item bg-transparent">No ingredients listed.</li>
                 }
               </ul>
@@ -100,7 +102,8 @@
                     </li>
                   }
                 </ol>
-              } @else if (recipe.instructions && isList(recipe.instructions)) {
+              } 
+              @else if (recipe.instructions && isList(recipe.instructions)) {
                 <ol class="list-group list-group-numbered">
                   @for (step of recipe.instructions; track $index) {
                     <li class="list-group-item border-0 mb-2">
@@ -108,12 +111,21 @@
                     </li>
                   }
                 </ol>
-              } @else {
+              } 
+              @else {
                 <p class="lead fs-6" [innerHTML]="recipe.instructions || recipe.summary"></p>
               }
             </div>
           </div>
+        </div> 
+        <hr class="my-5">
+        
+        <div class="row">
+          <div class="col-12">
+            <app-review [recipeId]="currentId!"></app-review>
+          </div>
         </div>
+
       </div>
     </div>
   }

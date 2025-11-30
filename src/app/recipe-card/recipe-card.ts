@@ -23,15 +23,26 @@ export class RecipeCard {
   private recipeService = inject(RecipeService);
   private router = inject(Router);
 
+  // 控制分享成功的视觉反馈
   isCopied = false;
 
   isFavorite = computed(() => {
     return this.favoriteService.isFavorite(this.recipe.id);
   });
 
+  // === 修改重点：更精准的权限判断 ===
   get isOwner(): boolean {
     const user = this.authService.currentUser();
-    return user && this.recipe.userId && String(this.recipe.userId) === String(user.id);
+    
+    // 条件1: 用户必须登录
+    // 条件2: userId 必须匹配
+    // 条件3 (关键): recipeId 必须不存在！
+    // 因为收藏夹里的条目也有 userId，但它们有 recipeId 指向原数据。
+    // 只有"原始自定义食谱"才没有 recipeId。
+    return user && 
+           this.recipe.userId && 
+           String(this.recipe.userId) === String(user.id) &&
+           !this.recipe.recipeId; 
   }
 
   get detailLink(): any[] {
@@ -72,12 +83,11 @@ export class RecipeCard {
     }
   }
 
-  // === 升级版分享功能 ===
+  // 分享功能
   async onShare(event: Event) {
     event.stopPropagation();
     event.preventDefault();
 
-    // 1. 构建完整 URL
     const urlTree = this.router.createUrlTree(this.detailLink);
     const fullUrl = window.location.origin + urlTree.toString();
     const shareData = {
@@ -86,22 +96,15 @@ export class RecipeCard {
       url: fullUrl
     };
 
-    // 2. 尝试调用原生分享 (Web Share API)
-    // 注意：navigator.share 只能在 HTTPS 或 localhost 环境下使用
     if (navigator.share) {
       try {
         await navigator.share(shareData);
-        console.log('Shared successfully');
-        return; // 如果分享成功，就不用复制链接了
+        return; 
       } catch (err) {
-        console.log('Error sharing or user cancelled:', err);
-        // 如果用户取消了分享，或者报错了，我们不一定要降级复制，看你需求
-        // 这里我们选择：如果报错（非取消），尝试降级复制
+        console.log('Error sharing:', err);
       }
     }
 
-    // 3. 降级方案：复制到剪贴板
-    // (如果浏览器不支持原生分享，或者在非安全环境下)
     this.copyToClipboard(fullUrl);
   }
 
