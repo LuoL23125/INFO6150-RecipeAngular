@@ -162,6 +162,17 @@
       "readyInMinutes": 45,
       "servings": 4,
       "addedAt": "2025-11-30T02:43:50.390Z"
+    },
+    {
+      "id": "70d8",
+      "userId": "1",
+      "recipeId": "658813",
+      "title": "Rosemary Walnut Bread",
+      "image": "https://img.spoonacular.com/recipes/658813-556x370.jpg",
+      "readyInMinutes": 45,
+      "servings": 16,
+      "summary": "Rosemary Walnut Bread is a bread that serves 16. Watching your figure? This lacto ovo vegetarian recipe has <b>308 calories</b>, <b>9g of protein</b>, and <b>15g of fat</b> per serving. For <b>74 cents per serving</b>, this recipe <b>covers 11%</b> of your daily requirements of vitamins and minerals. A mixture of cream cheese, olive oil, eggs, and a handful of other ingredients are all it takes to make this recipe so scrumptious. 8 people have made this recipe and would make it again. It is brought to you by Foodista. From preparation to the plate, this recipe takes roughly <b>45 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 59%</b>, which is solid. Users who liked this recipe also liked <a href=\"https://spoonacular.com/recipes/rosemary-walnut-bread-802177\">Rosemary Walnut Bread</a>, <a href=\"https://spoonacular.com/recipes/walnut-rosemary-bread-508293\">Walnut Rosemary Bread</a>, and <a href=\"https://spoonacular.com/recipes/walnut-cake-with-a-hint-of-rosemary-697846\">Walnut Cake with a Hint of Rosemary</a>.",
+      "addedAt": "2025-11-30T21:11:29.051Z"
     }
   ],
   "mealPlans": [
@@ -417361,7 +417372,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/pan-seared-scallops-654474"
     },
     {
-      "id": 638717,
+      "id": "638717",
       "image": "https://img.spoonacular.com/recipes/638717-556x370.jpg",
       "imageType": "jpg",
       "title": "Chinese Steamed Flan",
@@ -419502,7 +419513,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/chinese-steamed-flan-638717"
     },
     {
-      "id": 655239,
+      "id": "655239",
       "image": "https://img.spoonacular.com/recipes/655239-556x370.jpg",
       "imageType": "jpg",
       "title": "Peanut Butter Banana French Toast",
@@ -422190,7 +422201,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/peanut-butter-banana-french-toast-655239"
     },
     {
-      "id": 659060,
+      "id": "659060",
       "image": "https://img.spoonacular.com/recipes/659060-556x370.jpg",
       "imageType": "jpg",
       "title": "Salmon Confit with Lemongrass Sauce",
@@ -426794,7 +426805,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/salmon-confit-with-lemongrass-sauce-659060"
     },
     {
-      "id": 764752,
+      "id": "764752",
       "image": "https://img.spoonacular.com/recipes/764752-556x370.jpg",
       "imageType": "jpg",
       "title": "Cinnamon French Toast Sticks",
@@ -429443,7 +429454,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/cinnamon-french-toast-sticks-764752"
     },
     {
-      "id": 644167,
+      "id": "644167",
       "image": "https://img.spoonacular.com/recipes/644167-556x370.jpg",
       "imageType": "jpg",
       "title": "Garam Masala Pork Chops with Mint Yogurt and Spiced Couscous",
@@ -433324,7 +433335,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/garam-masala-pork-chops-with-mint-yogurt-and-spiced-couscous-644167"
     },
     {
-      "id": 657556,
+      "id": "657556",
       "image": "https://img.spoonacular.com/recipes/657556-556x370.png",
       "imageType": "png",
       "title": "Quick and Easy Southwestern Corn Chowder",
@@ -436568,7 +436579,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/quick-and-easy-southwestern-corn-chowder-657556"
     },
     {
-      "id": 634992,
+      "id": "634992",
       "image": "https://img.spoonacular.com/recipes/634992-556x370.jpg",
       "imageType": "jpg",
       "title": "Bing's Mango Salsa",
@@ -439637,7 +439648,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/bings-mango-salsa-634992"
     },
     {
-      "id": 651326,
+      "id": "651326",
       "image": "https://img.spoonacular.com/recipes/651326-556x370.jpg",
       "imageType": "jpg",
       "title": "Meat rolls with prosciutto and sage",
@@ -442606,7 +442617,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/meat-rolls-with-prosciutto-and-sage-651326"
     },
     {
-      "id": 637440,
+      "id": "637440",
       "image": "https://img.spoonacular.com/recipes/637440-556x370.jpg",
       "imageType": "jpg",
       "title": "Chapchae (Korean Stir-Fried Noodles)",
@@ -446569,7 +446580,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/chapchae-korean-stir-fried-noodles-637440"
     },
     {
-      "id": 664273,
+      "id": "664273",
       "image": "https://img.spoonacular.com/recipes/664273-556x370.jpg",
       "imageType": "jpg",
       "title": "Valentine's Day Potted Plant Ice-Cream Desserts",
@@ -448587,7 +448598,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/valentines-day-potted-plant-ice-cream-desserts-664273"
     },
     {
-      "id": 716334,
+      "id": "716334",
       "image": "https://img.spoonacular.com/recipes/716334-556x370.jpg",
       "imageType": "jpg",
       "title": "Plantain Toffee Balls",
@@ -451049,7 +451060,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/plantain-toffee-balls-716334"
     },
     {
-      "id": 637675,
+      "id": "637675",
       "image": "https://img.spoonacular.com/recipes/637675-556x370.jpg",
       "imageType": "jpg",
       "title": "Cheesy Potato Corn Scones",
@@ -454124,7 +454135,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/cheesy-potato-corn-scones-637675"
     },
     {
-      "id": 655043,
+      "id": "655043",
       "image": "https://img.spoonacular.com/recipes/655043-556x370.jpg",
       "imageType": "jpg",
       "title": "PB Cup Stuffed Brownie Bites",
@@ -457047,7 +457058,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/pb-cup-stuffed-brownie-bites-655043"
     },
     {
-      "id": 652134,
+      "id": "652134",
       "image": "https://img.spoonacular.com/recipes/652134-556x370.jpg",
       "imageType": "jpg",
       "title": "Mixed Paella",
@@ -462175,7 +462186,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/mixed-paella-652134"
     },
     {
-      "id": 632280,
+      "id": "632280",
       "image": "https://img.spoonacular.com/recipes/632280-556x370.jpg",
       "imageType": "jpg",
       "title": "Amaretto Almond Cookies",
@@ -464768,7 +464779,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/amaretto-almond-cookies-632280"
     },
     {
-      "id": 637473,
+      "id": "637473",
       "image": "https://img.spoonacular.com/recipes/637473-556x370.jpg",
       "imageType": "jpg",
       "title": "Chavrie Caramelized Red Onion Tarts",
@@ -467007,7 +467018,7 @@
       "spoonacularSourceUrl": "https://spoonacular.com/chavrie-caramelized-red-onion-tarts-637473"
     },
     {
-      "id": 660297,
+      "id": "660297",
       "image": "https://img.spoonacular.com/recipes/660297-556x370.jpg",
       "imageType": "jpg",
       "title": "Slow Cooker Poblano Corn Chowder with Chicken and Chorizo",

@@ -2,81 +2,156 @@
   <div class="admin-header py-5 mb-4">
     <div class="container">
       <h1 class="fw-bold"><i class="bi bi-speedometer2 me-2"></i> Admin Dashboard</h1>
-      <p class="mb-0 opacity-75">Manage users, permissions, and content.</p>
+      <p class="mb-0 opacity-75">Overview & Management Console</p>
     </div>
   </div>
 
   <div class="container mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h3 class="text-secondary mb-0">User Management</h3>
-      <span class="badge bg-secondary">{{ users.length }} Users</span>
-    </div>
     
-    <div class="table-responsive bg-white">
-      <table class="table table-hover mb-0 align-middle">
-        <thead class="table-light">
-          <tr>
-            <th scope="col">User</th>
-            <th scope="col">Role</th>
-            <th scope="col">Joined Date</th>
-            <th scope="col" class="text-end">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (user of users; track user.id) {
-            <tr [class.table-active]="user.id === authService.currentUser()?.id">
-              <td>
-                <div class="d-flex flex-column">
-                  <span class="fw-bold text-dark">
-                    {{ user.name }}
-                    @if (user.id === authService.currentUser()?.id) {
-                      <span class="badge bg-success ms-1">You</span>
-                    }
-                  </span>
-                  <small class="text-muted">{{ user.email }}</small>
-                  <small class="text-muted" style="font-size: 0.75rem;">ID: {{ user.id }}</small>
-                </div>
-              </td>
+    <div class="row g-4 mb-5">
+      <div class="col-md-6 col-lg-3">
+        <div class="card stats-card bg-users p-3 shadow h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0 fw-bold">Total Users</h5>
+            <i class="bi bi-people-fill fs-3 opacity-50"></i>
+          </div>
+          <h2 class="display-4 fw-bold mb-0">{{ stats.totalUsers }}</h2>
+          <small class="opacity-75">Registered Accounts</small>
+        </div>
+      </div>
 
-              <td>
-                @if (user.isAdmin) {
-                  <span class="badge bg-danger rounded-pill px-3">
-                    <i class="bi bi-shield-lock-fill me-1"></i> Admin
-                  </span>
-                } @else {
-                  <span class="badge bg-info text-dark rounded-pill px-3">
-                    <i class="bi bi-person-fill me-1"></i> User
-                  </span>
-                }
-              </td>
+      <div class="col-md-6 col-lg-3">
+        <div class="card stats-card bg-favs p-3 shadow h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0 fw-bold">Favorites</h5>
+            <i class="bi bi-heart-fill fs-3 opacity-50"></i>
+          </div>
+          <h2 class="display-4 fw-bold mb-0">{{ stats.totalFavorites }}</h2>
+          <small class="opacity-75">Recipes Saved</small>
+        </div>
+      </div>
 
-              <td class="text-muted">{{ user.createdAt | date:'mediumDate' }}</td>
+      <div class="col-md-6 col-lg-3">
+        <div class="card stats-card bg-plans p-3 shadow h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0 fw-bold">Meal Plans</h5>
+            <i class="bi bi-calendar-check-fill fs-3 opacity-50"></i>
+          </div>
+          <h2 class="display-4 fw-bold mb-0">{{ stats.totalMealPlans }}</h2>
+          <small class="opacity-75">Generated & Saved</small>
+        </div>
+      </div>
 
-              <td class="text-end">
-                <button 
-                  class="btn btn-sm action-btn me-2" 
-                  [class.btn-outline-warning]="!user.isAdmin"
-                  [class.btn-outline-secondary]="user.isAdmin"
-                  (click)="toggleAdmin(user)"
-                  [title]="user.isAdmin ? 'Revoke Admin' : 'Grant Admin'"
-                  [disabled]="user.id === authService.currentUser()?.id"
-                >
-                  <i class="bi" [class.bi-key-fill]="!user.isAdmin" [class.bi-key]="user.isAdmin"></i>
-                </button>
-
-                <button 
-                  class="btn btn-sm btn-outline-danger action-btn" 
-                  (click)="deleteUser(user)"
-                  title="Delete User"
-                  [disabled]="user.id === authService.currentUser()?.id"
-                >
-                  <i class="bi bi-trash"></i>
-                </button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+      <div class="col-md-6 col-lg-3">
+        <div class="card stats-card bg-top p-3 shadow h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0 fw-bold">Trending</h5>
+            <i class="bi bi-trophy-fill fs-3 opacity-50"></i>
+          </div>
+          <h5 class="fw-bold mb-1 text-truncate" [title]="stats.mostReviewedRecipe">
+            {{ stats.mostReviewedRecipe }}
+          </h5>
+          <small class="opacity-75">Most Reviewed Recipe</small>
+        </div>
+      </div>
     </div>
+
+    <ul class="nav nav-pills mb-4">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'users'" (click)="setTab('users')">
+          <i class="bi bi-people-fill me-2"></i> Users
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'reviews'" (click)="setTab('reviews')">
+          <i class="bi bi-chat-left-quote-fill me-2"></i> Reviews
+        </a>
+      </li>
+    </ul>
+
+    @if (activeTab === 'users') {
+      <div class="table-responsive bg-white fade-in">
+        <table class="table table-hover mb-0 align-middle">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">User</th>
+              <th scope="col">Role</th>
+              <th scope="col">Joined Date</th>
+              <th scope="col" class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of users; track user.id) {
+              <tr [class.table-active]="user.id === authService.currentUser()?.id">
+                <td>
+                  <div class="d-flex flex-column">
+                    <span class="fw-bold text-dark">
+                      {{ user.name }}
+                      @if (user.id === authService.currentUser()?.id) { <span class="badge bg-success ms-1">You</span> }
+                    </span>
+                    <small class="text-muted">{{ user.email }}</small>
+                  </div>
+                </td>
+                <td>
+                  @if (user.isAdmin) { <span class="badge bg-danger rounded-pill px-3"><i class="bi bi-shield-lock-fill me-1"></i> Admin</span> } 
+                  @else { <span class="badge bg-info text-dark rounded-pill px-3"><i class="bi bi-person-fill me-1"></i> User</span> }
+                </td>
+                <td class="text-muted">{{ user.createdAt | date:'mediumDate' }}</td>
+                <td class="text-end">
+                  <button class="btn btn-sm action-btn me-2" [class.btn-outline-warning]="!user.isAdmin" [class.btn-outline-secondary]="user.isAdmin" (click)="toggleAdmin(user)" [disabled]="user.id === authService.currentUser()?.id">
+                    <i class="bi" [class.bi-key-fill]="!user.isAdmin" [class.bi-key]="user.isAdmin"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger action-btn" (click)="deleteUser(user)" [disabled]="user.id === authService.currentUser()?.id">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    @if (activeTab === 'reviews') {
+      <div class="table-responsive bg-white fade-in">
+        <table class="table table-hover mb-0 align-middle">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" style="width: 20%;">Author</th>
+              <th scope="col" style="width: 50%;">Comment</th>
+              <th scope="col" style="width: 15%;">Rating</th>
+              <th scope="col" style="width: 15%;" class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (review of reviews; track review.id) {
+              <tr>
+                <td>
+                  <div class="fw-bold">{{ review.userName }}</div>
+                  <small class="text-muted">{{ review.createdAt | date:'mediumDate' }}</small>
+                </td>
+                <td>
+                  <p class="mb-0 text-secondary" style="font-size: 0.95rem;">"{{ review.comment }}"</p>
+                  <small class="text-muted">Recipe ID: {{ review.recipeId }}</small>
+                </td>
+                <td>
+                  <div class="text-warning">
+                    @for (i of [1,2,3,4,5]; track i) { <i class="bi" [class.bi-star-fill]="i <= review.rating" [class.bi-star]="i > review.rating"></i> }
+                  </div>
+                </td>
+                <td class="text-end">
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteReview(review)">
+                    <i class="bi bi-trash me-1"></i> Delete
+                  </button>
+                </td>
+              </tr>
+            } @empty {
+              <tr><td colspan="4" class="text-center py-5 text-muted">No reviews found.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
   </div>
 </div>

@@ -13,6 +13,7 @@ export class RecipeService {
   private mealPlanUrl = 'https://api.spoonacular.com/mealplanner/generate'; // Spoonacular Generator
   private plansUrl = 'http://localhost:3000/mealPlans'; // JSON Server for meal plans
   private reviewsUrl = 'http://localhost:3000/reviews'; // 新增：评论端点
+  private favoritesUrl = 'http://localhost:3000/favorites'; // 新增：为了Admin统计
   
   private http = inject(HttpClient);
 
@@ -205,4 +206,20 @@ export class RecipeService {
   updateReview(id: string | number, review: any): Observable<any> {
     return this.http.put(`${this.reviewsUrl}/${id}`, review);
   }
+
+  // === 新增：Admin 管理评论 ===
+  
+  // 1. 获取所有评论 (不分菜谱)
+  getAllReviews(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.reviewsUrl}?_sort=createdAt&_order=desc`);
+  }
+
+  // 2. 删除评论
+  deleteReview(id: string | number): Observable<any> {
+    return this.http.delete(`${this.reviewsUrl}/${id}`);
+  }
+
+  // 新增：Admin 统计需要
+  getAllFavorites(): Observable<any[]> { return this.http.get<any[]>(this.favoritesUrl); }
+  getAllMealPlans(): Observable<any[]> { return this.http.get<any[]>(this.plansUrl); }
 }
