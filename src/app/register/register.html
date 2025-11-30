@@ -27,14 +27,24 @@
         <label for="email">Email address</label>
       </div>
 
-      <div class="form-floating mb-3">
-        <input type="password" class="form-control" id="password" placeholder="Password" [(ngModel)]="formData.password" name="password" required>
-        <label for="password">Password</label>
+      <div class="input-group mb-3">
+        <div class="form-floating">
+          <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" placeholder="Password" [(ngModel)]="formData.password" name="password" required>
+          <label for="password">Password</label>
+        </div>
+        <span class="input-group-text" (click)="showPassword = !showPassword">
+          <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword"></i>
+        </span>
       </div>
 
-      <div class="form-floating mb-3">
-        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
-        <label for="confirmPassword">Confirm Password</label>
+      <div class="input-group mb-3">
+        <div class="form-floating">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" id="confirmPassword" placeholder="Confirm Password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+          <label for="confirmPassword">Confirm Password</label>
+        </div>
+        <span class="input-group-text" (click)="showConfirmPassword = !showConfirmPassword">
+          <i class="bi" [class.bi-eye]="!showConfirmPassword" [class.bi-eye-slash]="showConfirmPassword"></i>
+        </span>
       </div>
 
       <button class="w-100 btn btn-lg custom-green-btn" type="submit">Register</button>

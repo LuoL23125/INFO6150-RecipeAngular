@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // <--- 1. 必须引入 FormsModule
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth';
 import { FavoriteService } from '../services/favorite';
@@ -9,7 +10,7 @@ import { RecipeCard } from '../recipe-card/recipe-card';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RecipeCard, RouterModule],
+  imports: [CommonModule, RecipeCard, RouterModule, FormsModule], // <--- 2. 注册
   templateUrl: './profile.html',
   styleUrls: ['./profile.css']
 })
@@ -24,9 +25,17 @@ export class Profile implements OnInit {
   user: any = null;
   favorites: any[] = [];
   customRecipes: any[] = [];
-  mealPlans: any[] = []; 
+  mealPlans: any[] = [];
   
   activeTab = 'favorites'; 
+
+  // === 新增：表单数据模型 ===
+  profileForm = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    newPassword: '' // 仅用于修改，默认留空
+  };
 
   ngOnInit() {
     this.user = this.authService.currentUser();
@@ -36,6 +45,11 @@ export class Profile implements OnInit {
       return;
     }
 
+    // 初始化表单数据
+    this.profileForm.firstName = this.user.firstName;
+    this.profileForm.lastName = this.user.lastName;
+    this.profileForm.email = this.user.email;
+
     this.loadFavorites();
     this.loadCustomRecipes();
     this.loadMealPlans();
@@ -44,6 +58,38 @@ export class Profile implements OnInit {
       if (params['tab']) {
         this.activeTab = params['tab'];
         this.cdr.detectChanges();
+      }
+    });
+  }
+
+  // === 新增：保存修改 ===
+  onUpdateProfile() {
+    if (!this.user) return;
+
+    // 准备要更新的数据
+    const updateData: any = {
+      firstName: this.profileForm.firstName,
+      lastName: this.profileForm.lastName,
+      // 同时更新全名，保持数据一致性
+      name: `${this.profileForm.firstName} ${this.profileForm.lastName}`,
+      email: this.profileForm.email
+    };
+
+    // 只有当用户填了新密码时才更新密码
+    if (this.profileForm.newPassword && this.profileForm.newPassword.trim() !== '') {
+      updateData.password = this.profileForm.newPassword;
+    }
+
+    this.authService.updateProfile(this.user.id, updateData).subscribe({
+      next: (updatedUser) => {
+        alert('Profile updated successfully!');
+        this.user = updatedUser; // 更新本地视图
+        this.profileForm.newPassword = ''; // 清空密码框
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Failed to update profile.');
       }
     });
   }
@@ -81,12 +127,10 @@ export class Profile implements OnInit {
     }
   }
 
-  // === 新增：删除计划 ===
   deletePlan(id: string) {
     if (confirm('Are you sure you want to delete this meal plan?')) {
       this.recipeService.deleteMealPlan(id).subscribe({
         next: () => {
-          // 删除成功后重新加载
           this.loadMealPlans();
         },
         error: () => alert('Failed to delete plan.')

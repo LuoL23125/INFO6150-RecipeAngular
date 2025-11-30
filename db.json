@@ -1,9 +1,19 @@
 {
   "users": [
     {
+      "id": "admin-1",
+      "email": "admin@example.com",
+      "password": "YWRtaW4xMjM=",
+      "firstName": "Admin",
+      "lastName": "",
+      "name": "Admin ",
+      "isAdmin": true,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
       "id": "1",
-      "email": "demo2@example.com",
-      "password": "ZGVtbzEyMw==",
+      "email": "demo@example.com",
+      "password": "bmV3MTIz",
       "firstName": "Demo",
       "lastName": "User",
       "name": "Demo User",

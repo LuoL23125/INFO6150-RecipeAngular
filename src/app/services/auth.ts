@@ -1,8 +1,8 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject, signal, computed } from '@angular/core'; // <--- 引入 computed
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, map, tap } from 'rxjs';
-import { FavoriteService } from './favorite'; // <--- 引入
+import { FavoriteService } from './favorite';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +10,25 @@ import { FavoriteService } from './favorite'; // <--- 引入
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private favoriteService = inject(FavoriteService); // <--- 注入
+  private favoriteService = inject(FavoriteService);
   
   private apiUrl = 'http://localhost:3000/users';
 
-  // 尝试初始化时如果有用户，也加载收藏
   currentUser = signal<any>(this.getUserFromStorage());
 
+  // === 新增：计算属性，实时判断是否为管理员 ===
+  isAdmin = computed(() => !!this.currentUser()?.isAdmin);
+
   constructor() {
-    // 如果刷新页面时用户已登录，重新加载他的收藏列表
     const user = this.currentUser();
     if (user) {
       this.favoriteService.loadFavorites(user.id).subscribe();
     }
+  }
+
+  // === 新增：获取所有用户 (供 Admin Dashboard 使用) ===
+  getAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
   register(userData: any): Observable<any> {
@@ -30,7 +36,7 @@ export class AuthService {
       ...userData,
       name: `${userData.firstName} ${userData.lastName}`,
       password: btoa(userData.password),
-      isAdmin: false,
+      isAdmin: false, // 默认注册的都不是管理员
       createdAt: new Date().toISOString()
     };
 
@@ -56,21 +62,30 @@ export class AuthService {
     );
   }
 
+  updateProfile(userId: string, data: any): Observable<any> {
+    if (data.password) {
+      data.password = btoa(data.password);
+    }
+    return this.http.patch(`${this.apiUrl}/${userId}`, data).pipe(
+      tap((updatedUser) => {
+        this.loginSuccess(updatedUser);
+      })
+    );
+  }
+
   logout() {
     this.currentUser.set(null);
     localStorage.removeItem('user');
-    this.favoriteService.clearFavorites(); // <--- 清空收藏状态
+    this.favoriteService.clearFavorites();
     this.router.navigate(['/']);
   }
 
   private loginSuccess(user: any) {
     this.currentUser.set(user);
     localStorage.setItem('user', JSON.stringify(user));
-    
-    // 登录成功后：加载该用户的收藏夹
-    this.favoriteService.loadFavorites(user.id).subscribe();
-    
-    // (可选) 如果你有合并逻辑，可以在这里调用 mergeLocalFavorites
+    if (user.id) {
+        this.favoriteService.loadFavorites(user.id).subscribe();
+    }
   }
 
   private getUserFromStorage() {

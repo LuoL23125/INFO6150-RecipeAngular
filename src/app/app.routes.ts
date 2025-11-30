@@ -6,7 +6,9 @@ import { Register } from './register/register';
 import { Profile } from './profile/profile';
 import { AddRecipe } from './add-recipe/add-recipe';
 import { AdvancedSearch } from './advanced-search/advanced-search';
-import { MealPlanner } from './meal-planner/meal-planner'; // <--- 新增
+import { MealPlanner } from './meal-planner/meal-planner';
+import { Dashboard } from './admin/dashboard/dashboard'; // <--- 新增
+import { adminGuard } from './guards/admin-guard'; // <--- 新增
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -17,6 +19,14 @@ export const routes: Routes = [
   { path: 'add-recipe', component: AddRecipe },
   { path: 'edit-recipe/:id', component: AddRecipe },
   { path: 'advanced-search', component: AdvancedSearch },
-  { path: 'meal-planner', component: MealPlanner }, // <--- 新增路由
+  { path: 'meal-planner', component: MealPlanner },
+  
+  // === Admin Route (Protected) ===
+  { 
+    path: 'admin', 
+    component: Dashboard,
+    canActivate: [adminGuard] // <--- 关键：只有管理员能进
+  },
+  
   { path: '**', redirectTo: '' }
 ];
