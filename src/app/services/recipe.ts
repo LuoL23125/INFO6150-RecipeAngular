@@ -6,10 +6,12 @@ import { Observable, forkJoin, map } from 'rxjs';
   providedIn: 'root'
 })
 export class RecipeService {
-  private apiKey = 'a7585a8f408c45b8b7f6627145388a33'; 
+  private apiKey = 'b5f2d96206764b048d012605b2abb365'; 
   private baseUrl = 'https://api.spoonacular.com/recipes';
   private localUrl = 'http://localhost:3000/cachedRecipes';
   private customUrl = 'http://localhost:3000/customRecipes';
+  private mealPlanUrl = 'https://api.spoonacular.com/mealplanner/generate'; // Spoonacular Generator
+  private plansUrl = 'http://localhost:3000/mealPlans'; // JSON Server for meal plans
   
   private http = inject(HttpClient);
 
@@ -156,5 +158,33 @@ export class RecipeService {
 
       return true;
     });
+  }
+
+// === Updated Meal Planner Logic ===
+
+  // 1. 生成周计划 (新增 exclude 参数)
+  generateWeeklyPlan(targetCalories: number, diet: string, exclude: string): Observable<any> {
+    let url = `${this.mealPlanUrl}?timeFrame=week&targetCalories=${targetCalories}&apiKey=${this.apiKey}`;
+    if (diet) {
+      url += `&diet=${diet}`;
+    }
+    // Spoonacular 参数是 'exclude' (Comma separated list of allergens or ingredients)
+    if (exclude) {
+      url += `&exclude=${exclude}`;
+    }
+    return this.http.get(url);
+  }
+
+  saveMealPlan(plan: any): Observable<any> {
+    return this.http.post(this.plansUrl, plan);
+  }
+
+  getUserMealPlans(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.plansUrl}?userId=${userId}`);
+  }
+
+  // 新增：删除计划
+  deleteMealPlan(id: string): Observable<any> {
+    return this.http.delete(`${this.plansUrl}/${id}`);
   }
 }

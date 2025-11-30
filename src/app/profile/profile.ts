@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth';
 import { FavoriteService } from '../services/favorite';
-import { RecipeService } from '../services/recipe'; // <--- 确保引入
+import { RecipeService } from '../services/recipe';
 import { RecipeCard } from '../recipe-card/recipe-card';
 
 @Component({
@@ -16,14 +16,15 @@ import { RecipeCard } from '../recipe-card/recipe-card';
 export class Profile implements OnInit {
   authService = inject(AuthService);
   private favoriteService = inject(FavoriteService);
-  private recipeService = inject(RecipeService); // <--- 注入
+  private recipeService = inject(RecipeService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
 
   user: any = null;
   favorites: any[] = [];
-  customRecipes: any[] = []; // <--- 新增数组
+  customRecipes: any[] = [];
+  mealPlans: any[] = []; 
   
   activeTab = 'favorites'; 
 
@@ -36,7 +37,8 @@ export class Profile implements OnInit {
     }
 
     this.loadFavorites();
-    this.loadCustomRecipes(); // <--- 调用加载自定义食谱
+    this.loadCustomRecipes();
+    this.loadMealPlans();
 
     this.route.queryParams.subscribe(params => {
       if (params['tab']) {
@@ -57,7 +59,6 @@ export class Profile implements OnInit {
     }
   }
 
-  // 新增：加载自定义食谱
   loadCustomRecipes() {
     if (this.user) {
       this.recipeService.getUserCustomRecipes(this.user.id).subscribe({
@@ -65,6 +66,30 @@ export class Profile implements OnInit {
           this.customRecipes = data;
           this.cdr.detectChanges();
         }
+      });
+    }
+  }
+
+  loadMealPlans() {
+    if (this.user) {
+      this.recipeService.getUserMealPlans(this.user.id).subscribe({
+        next: (data) => {
+          this.mealPlans = data;
+          this.cdr.detectChanges();
+        }
+      });
+    }
+  }
+
+  // === 新增：删除计划 ===
+  deletePlan(id: string) {
+    if (confirm('Are you sure you want to delete this meal plan?')) {
+      this.recipeService.deleteMealPlan(id).subscribe({
+        next: () => {
+          // 删除成功后重新加载
+          this.loadMealPlans();
+        },
+        error: () => alert('Failed to delete plan.')
       });
     }
   }

@@ -1,0 +1,89 @@
+<div class="container mt-5 mb-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold display-5">Weekly Meal Planner</h1>
+    <p class="text-muted">Generate a customized 7-day meal plan in seconds.</p>
+  </div>
+
+  <div class="row justify-content-center mb-5">
+    <div class="col-md-10 col-lg-8"> <div class="card shadow-sm border-0 p-4 bg-light">
+        <form (ngSubmit)="generatePlan()">
+          <div class="row g-3">
+            
+            <div class="col-md-6">
+              <label class="form-label fw-bold small">Target Calories (Daily)</label>
+              <input type="number" class="form-control" [(ngModel)]="targetCalories" name="calories" placeholder="2000">
+            </div>
+            
+            <div class="col-md-6">
+              <label class="form-label fw-bold small">Diet Preference</label>
+              <select class="form-select" [(ngModel)]="selectedDiet" name="diet">
+                <option value="">No Preference</option>
+                @for (d of diets; track d) {
+                  <option [value]="d">{{ d }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label fw-bold small">Exclude (Allergens/Ingredients)</label>
+              <input type="text" class="form-control" [(ngModel)]="excludeIngredients" name="exclude" placeholder="e.g. shellfish, olives (comma separated)">
+            </div>
+
+            <div class="col-12 mt-4">
+              <button type="submit" class="btn custom-green-btn fw-bold w-100 py-2" [disabled]="isLoading">
+                @if (isLoading) { 
+                  <span class="spinner-border spinner-border-sm me-2"></span> Generating...
+                } @else { 
+                  GENERATE PLAN
+                }
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  @if (formattedWeek.length > 0) {
+    <div class="d-flex justify-content-between align-items-center mb-4 fade-in">
+      <h3 class="fw-bold text-success">Your 7-Day Plan</h3>
+      <button class="btn btn-outline-dark" (click)="savePlan()">
+        <i class="bi bi-save me-2"></i> Save This Plan
+      </button>
+    </div>
+
+    <div class="row g-4 fade-in">
+      @for (day of formattedWeek; track day.name) {
+        <div class="col-12 col-xl-6">
+          <div class="card shadow-sm border-0 h-100 day-card">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+              <h5 class="mb-0 fw-bold">{{ day.name }}</h5>
+              <span class="badge bg-light text-dark border">
+                {{ day.nutrients.calories | number:'1.0-0' }} kcal
+              </span>
+            </div>
+            <div class="card-body p-0">
+              @for (meal of day.meals; track meal.id) {
+                <div class="d-flex align-items-center p-3 border-bottom meal-slot">
+                  <img [src]="'https://img.spoonacular.com/recipes/' + meal.id + '-90x90.' + meal.imageType" 
+                       class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                  
+                  <div class="flex-grow-1">
+                    <h6 class="mb-1 fw-bold text-truncate" style="max-width: 250px;">{{ meal.title }}</h6>
+                    <div class="small text-muted">
+                      Ready in {{ meal.readyInMinutes }} min • {{ meal.servings }} servings
+                    </div>
+                  </div>
+                  
+                  <a [routerLink]="['/recipe', meal.id]" class="btn btn-sm btn-outline-success">
+                    View
+                  </a>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
