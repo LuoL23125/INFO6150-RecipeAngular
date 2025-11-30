@@ -1,59 +1,85 @@
-# RecipeApp
+# Delicious Recipes App 🍳
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.0.
+A robust, full-featured recipe application built with **Angular (Standalone Components)**. This application allows users to search for recipes, manage a weekly meal plan, save favorites, and create their own custom recipes. It features a complete authentication system and an admin dashboard.
 
-## Development server
+The app is designed with a **fail-safe architecture**: if the external API limit is reached, it seamlessly falls back to local data served by JSON-Server.
 
-To start a local development server, run:
+## ✨ Features
 
+* **Recipe Search**:
+    * **Basic Search**: Quick keyword search.
+    * **Advanced Search**: Filter by diet (Vegetarian, Keto, etc.), intolerances (Dairy, Peanut), and ingredients.
+* **User Management**:
+    * User Registration & Login (JWT-style simulation).
+    * Profile Management (Update info, password).
+    * **Admin Dashboard**: User management, content moderation (reviews), and analytics.
+* **Personalization**:
+    * **Favorites**: Save recipes to your profile.
+    * **Meal Planner**: Generate a 7-day meal plan based on calories and diet.
+    * **Custom Recipes**: Create, edit, and delete your own recipes.
+* **Social**:
+    * Rate and Review recipes.
+    * Share recipes (Web Share API / Clipboard).
+* **Robust Data Handling**:
+    * Fetches live data from **Spoonacular API**.
+    * Falls back to local **JSON-Server** when API is unavailable.
+
+## 🛠️ Tech Stack
+
+* **Frontend**: Angular 17+ (Standalone Components, Signals, RxJS).
+* **Styling**: Bootstrap 5, Bootstrap Icons, Custom CSS.
+* **Mock Backend**: JSON-Server (REST API for Users, Favorites, Reviews, Custom Recipes).
+* **External API**: Spoonacular API.
+
+## 🚀 Getting Started
+
+Follow these steps to run the project locally.
+
+### 1. Clone the repository
 ```bash
-ng serve
+git clone [https://github.com/YOUR_USERNAME/recipe-app.git](https://github.com/YOUR_USERNAME/recipe-app.git)
+cd recipe-app
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+### 2. Install dependencies
 ```bash
-ng generate component component-name
-```
+npm install
+``` 
+### 3. Configure API Key
+1.  Get a free API Key from [Spoonacular](https://spoonacular.com/food-api).
+2.  Open `src/app/services/recipe.service.ts`.
+3.  Replace the `apiKey` variable with your key:
+    ```typescript
+    private apiKey = 'YOUR_REAL_API_KEY_HERE';
+    ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+### 4. Run the Project
+Open a terminal and run:
 ```bash
-ng generate --help
+npm start
 ```
+This will concurrently start the Angular development server and JSON-Server.
+The app will be available at `http://localhost:4200`.
+JSON-Server will be available at `http://localhost:3000`.
 
-## Building
+## 🔑 Demo Credentials
 
-To build the project run:
+You can use these accounts to test the application immediately:
 
-```bash
-ng build
-```
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Admin** | `admin@example.com` | `admin123` |
+| **User** | `demo@example.com` | `demo123` |
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+*(Note: Data is persisted in `db.json`. You can register new users freely.)*
 
-## Running unit tests
+## 📂 Project Structure
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+* `src/app/services`: Contains logic for API calls, Authentication, and Favorites.
+* `src/app/guards`: Route guards for Admin and Authenticated routes.
+* `src/app/admin`: Admin-specific components (Dashboard).
+* `src/app/shared`: Reusable components like Recipe Card.
 
-```bash
-ng test
-```
+## 🛡️ License
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project is for educational purposes.
