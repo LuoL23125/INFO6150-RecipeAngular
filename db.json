@@ -17,7 +17,7 @@
       "firstName": "Demo",
       "lastName": "User",
       "name": "Demo User",
-      "isAdmin": false,
+      "isAdmin": true,
       "createdAt": "2024-01-01T00:00:00.000Z"
     },
     {
@@ -27,28 +27,8 @@
       "email": "luolei23125@gmail.com",
       "password": "MTIzNDU2Nw==",
       "name": "Lei Luo",
-      "isAdmin": false,
+      "isAdmin": true,
       "createdAt": "2025-11-08T04:22:54.126Z"
-    },
-    {
-      "id": "f220",
-      "firstName": "Lei",
-      "lastName": "Luo",
-      "email": "luolei1@gmail.com",
-      "password": "MTIzNDU2Nzg=",
-      "name": "Lei Luo",
-      "isAdmin": false,
-      "createdAt": "2025-11-12T00:04:29.706Z"
-    },
-    {
-      "id": "e23b",
-      "firstName": "Robert",
-      "lastName": "Luo",
-      "email": "RL1@gmail.com",
-      "password": "MTIz",
-      "name": "Robert Luo",
-      "isAdmin": false,
-      "createdAt": "2025-11-28T00:39:25.649Z"
     }
   ],
   "favorites": [
@@ -84,17 +64,6 @@
       "servings": 2,
       "summary": "Asparagus and Pea Soup: Real Convenience Food requires approximately <b>20 minutes</b> from start to finish. Watching your figure? This gluten free, dairy free, paleolithic, and lacto ovo vegetarian r",
       "addedAt": "2025-11-11T22:14:17.903Z"
-    },
-    {
-      "id": "836f",
-      "userId": "f220",
-      "recipeId": 637067,
-      "title": "Caramelized Tofu & Gala Apple Salad",
-      "image": "https://img.spoonacular.com/recipes/637067-556x370.jpg",
-      "readyInMinutes": 45,
-      "servings": 2,
-      "summary": "Caramelized Tofu & Galan Apple Salad is a main course that serves 2. For <b>$2.31 per serving</b>, this recipe <b>covers 15%</b> of your daily requirements of vitamins and minerals. One serving contai",
-      "addedAt": "2025-11-12T00:18:16.827Z"
     },
     {
       "id": "ff10",

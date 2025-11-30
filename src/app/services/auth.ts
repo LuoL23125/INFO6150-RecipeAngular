@@ -1,7 +1,7 @@
-import { Injectable, inject, signal, computed } from '@angular/core'; // <--- 引入 computed
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map, tap, forkJoin, switchMap, of } from 'rxjs'; // <--- 引入 forkJoin, switchMap, of
 import { FavoriteService } from './favorite';
 
 @Injectable({
@@ -13,10 +13,10 @@ export class AuthService {
   private favoriteService = inject(FavoriteService);
   
   private apiUrl = 'http://localhost:3000/users';
+  // 定义其他资源的 URL 根路径，用于级联删除
+  private baseUrl = 'http://localhost:3000';
 
   currentUser = signal<any>(this.getUserFromStorage());
-
-  // === 新增：计算属性，实时判断是否为管理员 ===
   isAdmin = computed(() => !!this.currentUser()?.isAdmin);
 
   constructor() {
@@ -26,17 +26,55 @@ export class AuthService {
     }
   }
 
-  // === 新增：获取所有用户 (供 Admin Dashboard 使用) ===
+  // === Admin Features ===
+
   getAllUsers(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  // 1. 修改用户角色 (Promote/Demote)
+  updateUserRole(userId: string, isAdmin: boolean): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${userId}`, { isAdmin });
+  }
+
+  // 2. 删除用户及其所有关联数据 (Cascade Delete)
+  deleteUserAndData(userId: string): Observable<any> {
+    // 定义一个辅助函数：删除某个集合中属于该用户的所有条目
+    const deleteCollection = (collectionName: string) => {
+      return this.http.get<any[]>(`${this.baseUrl}/${collectionName}?userId=${userId}`).pipe(
+        switchMap(items => {
+          if (items.length === 0) return of([]); // 如果没数据，直接返回
+          // 并行发送 N 个删除请求
+          const deleteRequests = items.map(item => 
+            this.http.delete(`${this.baseUrl}/${collectionName}/${item.id}`)
+          );
+          return forkJoin(deleteRequests);
+        })
+      );
+    };
+
+    // 1. 并行清理所有关联数据
+    return forkJoin([
+      deleteCollection('favorites'),
+      deleteCollection('reviews'),
+      deleteCollection('mealPlans'),
+      deleteCollection('customRecipes')
+    ]).pipe(
+      // 2. 数据清理完毕后，删除用户本身
+      switchMap(() => {
+        return this.http.delete(`${this.apiUrl}/${userId}`);
+      })
+    );
+  }
+
+  // === Regular Features ===
 
   register(userData: any): Observable<any> {
     const newUser = {
       ...userData,
       name: `${userData.firstName} ${userData.lastName}`,
       password: btoa(userData.password),
-      isAdmin: false, // 默认注册的都不是管理员
+      isAdmin: false,
       createdAt: new Date().toISOString()
     };
 
@@ -68,7 +106,10 @@ export class AuthService {
     }
     return this.http.patch(`${this.apiUrl}/${userId}`, data).pipe(
       tap((updatedUser) => {
-        this.loginSuccess(updatedUser);
+        // 如果是更新自己，同步刷新本地状态
+        if (this.currentUser()?.id === userId) {
+          this.loginSuccess(updatedUser);
+        }
       })
     );
   }
